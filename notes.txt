@@ -1,0 +1,34 @@
+Page Login
+  username
+  password
+
+User Header
+  User Name, Balance <badge>
+
+Page User
+  User Header
+  MAKE AN ORDER
+  Table Last Orders
+    Index Date Name Thumbnail-of-uploaded-picture
+
+Order Form
+  Order Info  Upload Img
+              Send Send+Now
+
+Page Make an Order
+  Order Form
+    Order Inputs
+
+Send()
+  1. Drive
+      - check if a drive folder named <username> exists. If not create one.
+        - check if a folder named <current_date> exists. If not create one.
+      - place uploaded img named <order_id> in <username>/<create_date> drive folder.
+  2. Trello
+      - create project named <username>_<current_date>_<order_id>
+      - place card in an already created board in project <username>_<current_date>_<order_id>
+  3. Email
+      - email <wevector> with
+        - link to drive img
+        - link to trello project
+        - link to order in backoffice app
