@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     // return view('welcome');
+//     return view('home');
+// });
+
+Route::get('/', 'HomeController@index');
 
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/orders/create', 'OrdersController@create')->name('orders.create');
