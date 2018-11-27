@@ -22,4 +22,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/orders/create', 'OrdersController@create')->name('orders.create');
+Route::get('/orders/create', 'OrderController@create')->name('orders.create');
+
+Route::post('/orders/store', 'OrderController@store')->name('orders.store');

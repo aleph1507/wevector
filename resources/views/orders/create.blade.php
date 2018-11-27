@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
+  <div class="container bg-white">
     <div class="row">
       <h1 class="uppercase">create order</h1>
     </div>
-    <form class="" action="#" enctype="multipart/multipart/form-data" method="post">
+    <form class="" action="{{route('orders.store')}}" enctype="multipart/multipart/form-data" method="post">
       {{csrf_field()}}
       <div class="row">
-        <div class="col-xs-10 offset-xs-1 col-md-5 offset-md-2">
+        <div class="col-xs-10 offset-xs-1 col-md-5">
           <input type="text" name="name" value="" placeholder="1. artwork name">
-          <input type="hidden" name="orientation" value="">
+          <input type="hidden" name="orientation" id="orientation" value="">
           <div class="row">
-            <h3 class="uppercase">artwork orientation</h3>
+            <h3 class="uppercase mt-5 mb-3">2. artwork orientation</h3>
             <div class="col-xs-12 col-md-5">
               <button type="button" name="portrait"
               id="portrait" class="select-btn selected">Portrait</button>
@@ -22,9 +22,68 @@
                 id="landscape" class="select-btn">Landscape</button>
             </div>
           </div>
+          <h3 class="uppercase mt-5 mb-3">3. artwork size</h3>
+          <div class="row">
+            <div class="col-xs-10 offset-xs-1 col-md-4">
+              <input type="phone" name="width" id="width" value="">
+            </div>
+            <div class="col-xs-10 offset-xs-1 col-md-4 offset-md-1">
+              <input type="phone" name="height" id="height" value="">
+            </div>
+            <div class="col-xs-10 offset-xs-1 col-md-1 offset-md-1">
+              <select class="wv_select" name="art_units">
+                <option value="mm">mm</option>
+                <option value="cm">cm</option>
+                <option value="in">in</option>
+              </select>
+            </div>
+          </div>
+          <h3 class="uppercase mt-5 mb-3">4. colour pallete</h3>
+          <div class="row">
+            <input type="hidden" name="color-scheme" id="color-scheme" value="">
+            <div class="col-xs-12 col-md-5">
+              <button type="button" name="rgb"
+                id="rgb" data-input="color-scheme" class="select-btn selected">rgb</button>
+            </div>
+            <div class="col-xs-12 col-md-5 offset-md-2">
+              <button type="button" name="cmyk"
+                id="cmyk" data-input="color-scheme" class="select-btn">cmyk</button>
+            </div>
+          </div>
+          <h3 class="uppercase mt-5 mb-3">5. attach raster graphics</h3>
+          <div class="nlp">
+            <div class="d-flex flex-row justify-content-between">
+              <label class="btn btn-lg btn-outline-dark input-btn">
+                <input type="file" class="upload-input d-none" name="file">
+                <i class="fas fa-cloud-upload-alt"></i> Attach file
+              </label>
+
+              <label>Max files size 10Mb.</label>
+            </div>
+          </div>
+
+          <div class="nlp">
+            <label class="input-btn c-black">
+              <input type="file"
+                class="upload-input d-none" name="additional_files[]"
+                id="additional_files" multiple>
+              <u><b>Upload another file</b></u>
+            </label>
+          </div>
         </div>
         <div class="col-xs-10 offset-xs-1 col-md-3 offset-md-1">
-
+          <div class="d-flex w-100 h-100" style="background-color: #AAA;">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-12 mt-5">
+          <div class="d-flex justify-content-center align-items-center">
+            <input type="submit"
+              class="pink-button-lg text-uppercase"
+              name="submit" value="send order">
+          </div>
         </div>
       </div>
     </form>

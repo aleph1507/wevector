@@ -2,6 +2,26 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
+@font-face {
+  font-family: latoBlack;
+  src: url(../fonts/lato_black.ttf);
+}
+
+@font-face {
+  font-family: latoRegular;
+  src: url(../fonts/lato_regular.ttf);
+}
+
+@font-face {
+  font-family: latoBold;
+  src: url(../fonts/lato_bold.ttf);
+}
+
+@font-face {
+  font-family: latoLight;
+  src: url(../fonts/lato_light.ttf);
+}
+
 // Variables
 @import 'variables';
 
@@ -15,4 +35,47 @@
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.transparent-except-color {
+  background-color: rgba(255,255,255, 0);
+  border-color: rgba(255,255,255,0);
+}
+
+.c-black {
+  color: #000000;
+}
+
+.nlp {
+  padding-left:0px;
+}
+
+.input-btn {
+  display:inline-block;
+  font-size:16px;
+  z-index:1;
+  cursor: pointer;
+  border-color: black;
+  color:black;
+}
+
+.upload-input {
+  position:relative;
+  display:none;
+  width: 100%;
+  text-align:right;
+  -moz-opacity: 0;
+  opacity: 0;
+  z-index:2;
+}
+
+.pink-button-lg, .pink-button-lg:hover {
+  background-color: #f0386b;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0;
+  padding: 1em 5em;
+  border-radius: 5em;
+  font-weight: bold;
 }

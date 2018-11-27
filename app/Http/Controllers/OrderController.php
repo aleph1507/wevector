@@ -10,4 +10,9 @@ class OrderController extends Controller
     {
       return view('orders.create');
     }
+
+    public function store(Request $request)
+    {
+      var_dump($request->all());
+    }
 }

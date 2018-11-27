@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                   <h1>Current Balance <span class="badge-pill badge-warning px-3 py-1">{{Auth::user()->credits}}</span></h1>
-                  <a href="#"><h1 class="mt-5 mb-5 uppercase">make an order</h1></a>
+                  <a href="{{route('orders.create')}}"><h1 class="mt-5 mb-5 uppercase">make an order</h1></a>
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
