@@ -9,5 +9,6 @@ trait FolderStructure
   {
     $path = public_path() . $path;
     File::isDirectory($path) or File::makeDirectory($path, 0777, true, false);
+    return $path;
   }
 }
