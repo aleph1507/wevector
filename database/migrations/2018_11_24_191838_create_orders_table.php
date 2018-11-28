@@ -16,6 +16,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->enum('orientation', ['portrait', 'landscape']);
+            $table->enum('color_scheme', ['rgb', 'cmyk'])->nullable();
+            $table->string('file')->nullable();
+            $table->text('additional_files')->nullable();
             $table->string('image');
             $table->timestamps();
         });

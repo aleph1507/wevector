@@ -19,6 +19,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'username', 'name', 'email', 'password',
     ];
 
+    public function isActivated()
+    {
+        return $this->activated;
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

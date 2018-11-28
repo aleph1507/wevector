@@ -75,7 +75,20 @@
   text-transform: uppercase;
   text-decoration: none;
   border: 0;
-  padding: 1em 5em;
+  padding: 0.5em 5em;
   border-radius: 5em;
   font-weight: bold;
+}
+
+.select-btn {
+  border: 1px solid black;
+  background: none;
+  box-shadow: none;
+  border-radius: 0px;
+  width:100%;
+}
+
+.select-btn.selected {
+  background-color: black;
+  color:white;
 }
