@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['name', 'orientation', 'color_scheme'];
+    protected $fillable = ['name', 'orientation',
+      'color_scheme', 'file', 'additional_files'];
 }

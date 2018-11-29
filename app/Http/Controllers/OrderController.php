@@ -6,21 +6,11 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\Traits\FolderStructure;
 use Image;
+use File;
 
 class OrderController extends Controller
 {
     use FolderStructure;
-
-    public function intervene_image($imgFile, $name)
-    {
-      $name .= $imgFile->getClientOriginalExtension();
-      return Image::make($imgFile);
-    }
-
-    public function locate_image($img, $path)
-    {
-      $this->find_od_make_path($path);
-    }
 
     public function create()
     {
@@ -37,14 +27,34 @@ class OrderController extends Controller
         'additional_files.*' => 'sometimes|image'
       ]);
 
-      $tmp = $this->find_od_make_path('/tmp');
+      $this->clean_tmp();
 
+      $tmp_additional_files = [];
+      $additional_files_count = 0;
+      $additional_files_field = null;
 
+      $tmp = $this->find_or_make_path('tmp');
+      $tmp_add_path = $this->find_or_make_path('tmp/additional');
 
-      intervene_image($request->file('file'), time());
+      $tmp_img = $this->intervene_image($request->file('file'), time(), $tmp);
 
-      // $no = Order::create(request(['name', 'orientation', 'color_scheme']));
-      //
-      // echo '<br>' . $no->name . '<br>' . $no->orientation . '<br>' . $no->color_scheme;
+      // if(count($request->file('additional_files'))>0)
+      if($request->file('additional_files'))
+      {
+        foreach($request->file('additional_files') as $add_file)
+        {
+          $tmp_additional_files[] =
+          $this->intervene_image($add_file, $additional_files_count++ . time(), $tmp_add_path);
+        }
+        $additional_files_field = implode('.', $tmp_additional_files);
+      }
+
+      $no = Order::create(['name' => $request->name,
+            'orientation' => $request->orientation,
+            'color_scheme' => $request->color_scheme, 'file' => $tmp_img,
+            'additional_files' => $additional_files_field]);
+
+      var_dump($no);
+
     }
 }

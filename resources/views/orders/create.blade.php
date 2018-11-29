@@ -45,16 +45,16 @@
           </div>
           <h3 class="uppercase mt-5 mb-3">4. colour pallete</h3>
           <div class="row">
-            <input type="hidden" name="color-scheme"
-              id="color-scheme" value="">
+            <input type="hidden" name="color_scheme"
+              id="color_scheme" value="">
             <div class="col-xs-12 col-md-5">
               <button type="button" name="rgb"
-                id="rgb" data-input="#color-scheme"
+                id="rgb" data-input="#color_scheme"
                 data-value="rgb" class="select-btn">rgb</button>
             </div>
             <div class="col-xs-12 col-md-5 offset-md-2">
               <button type="button" name="cmyk"
-                id="cmyk" data-input="#color-scheme"
+                id="cmyk" data-input="#color_scheme"
                 data-value="cmyk" class="select-btn">cmyk</button>
             </div>
           </div>

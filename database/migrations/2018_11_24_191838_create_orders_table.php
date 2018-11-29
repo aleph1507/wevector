@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->enum('color_scheme', ['rgb', 'cmyk'])->nullable();
             $table->string('file')->nullable();
             $table->text('additional_files')->nullable();
-            $table->string('image');
+            // $table->string('image');
             $table->timestamps();
         });
     }
