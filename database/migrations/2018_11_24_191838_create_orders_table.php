@@ -17,9 +17,10 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->enum('orientation', ['portrait', 'landscape']);
-            $table->enum('color_scheme', ['rgb', 'cmyk'])->nullable();
+            $table->enum('color_scheme', ['rgb', 'cmyk', null])->nullable();
             $table->string('file')->nullable();
             $table->text('additional_files')->nullable();
+            $table->integer('user_id');
             // $table->string('image');
             $table->timestamps();
         });

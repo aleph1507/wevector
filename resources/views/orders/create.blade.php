@@ -10,7 +10,7 @@
       {{csrf_field()}}
       <div class="row">
         <div class="col-xs-10 offset-xs-1 col-md-5">
-          <input type="text" name="name" value=""
+          <input type="text" name="name" value="{{ old('name') }}"
             placeholder="1. artwork name *" required>
           <input type="hidden" name="orientation"
             id="orientation" value="portrait" required>
@@ -19,27 +19,31 @@
             <div class="col-xs-12 col-md-5">
               <button type="button" name="portrait"
                 id="portrait" data-input="#orientation"
-                data-value="portrait" class="select-btn selected">Portrait</button>
+                data-value="portrait"
+                class="select-btn {{ old('orientation') != 'landscape' ? 'selected' : ''}}"
+                >Portrait</button>
             </div>
             <div class="col-xs-12 col-md-5 offset-md-2">
               <button type="button" name="landscape"
                 id="landscape" data-input="#orientation"
-                data-value="landscape" class="select-btn">Landscape</button>
+                data-value="landscape"
+                class="select-btn {{ old('orientation') == 'landscape' ? 'selected' : ''}}"
+                >Landscape</button>
             </div>
           </div>
           <h3 class="uppercase mt-5 mb-3">3. artwork size *</h3>
           <div class="row">
             <div class="col-xs-10 offset-xs-1 col-md-4">
-              <input type="phone" name="width" id="width" value="" required>
+              <input type="phone" name="width" id="width" value="{{ old('width') }}" required>
             </div>
             <div class="col-xs-10 offset-xs-1 col-md-4 offset-md-1">
-              <input type="phone" name="height" id="height" value="" required>
+              <input type="phone" name="height" id="height" value="{{ old('height') }}" required>
             </div>
             <div class="col-xs-10 offset-xs-1 col-md-1 offset-md-1">
               <select class="wv_select" name="art_units">
-                <option value="mm">mm</option>
-                <option value="cm">cm</option>
-                <option value="in">in</option>
+                <option value="mm" {{ old('wv_select') == 'mm' ? 'selected' : '' }}>mm</option>
+                <option value="cm" {{ old('wv_select') == 'cm' ? 'selected' : '' }}>cm</option>
+                <option value="in" {{ old('wv_select') == 'in' ? 'selected' : '' }}>in</option>
               </select>
             </div>
           </div>
@@ -50,12 +54,16 @@
             <div class="col-xs-12 col-md-5">
               <button type="button" name="rgb"
                 id="rgb" data-input="#color_scheme"
-                data-value="rgb" class="select-btn">rgb</button>
+                data-value="rgb"
+                class="select-btn {{ old('color_scheme') == 'rgb' ? 'selected' : ''}}"
+                >rgb</button>
             </div>
             <div class="col-xs-12 col-md-5 offset-md-2">
               <button type="button" name="cmyk"
                 id="cmyk" data-input="#color_scheme"
-                data-value="cmyk" class="select-btn">cmyk</button>
+                data-value="cmyk"
+                class="select-btn {{ old('color_scheme') == 'cmyk' ? 'selected' : ''}}"
+                >cmyk</button>
             </div>
           </div>
           <h3 class="uppercase mt-5 mb-3">5. attach raster graphics</h3>

@@ -24,7 +24,17 @@
                       <th>Thumbnail</th>
                     </thead>
                     <tbody>
-
+                      @for($i = 0; $i < count($orders); $i++)
+                        <tr>
+                          <td>{{$i+1}}</td>
+                          <td>{{$orders[$i]->updated_at}}</td>
+                          <td>{{$orders[$i]->name}}</td>
+                          <td>
+                            <img src="{{asset('images/' . $orders[$i]->id . '/thumb' . '/' . $orders[$i]->file)}}"
+                             alt="{{$orders[$i]->file}}">
+                          </td>
+                        </tr>
+                      @endfor
                     </tbody>
                   </table>
                 </div>

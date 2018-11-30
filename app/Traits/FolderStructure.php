@@ -19,6 +19,8 @@ trait FolderStructure
     $file = new Filesystem;
     if(File::isDirectory(public_path('tmp/additional')))
       $file->cleanDirectory(public_path('tmp/additional'));
+    if(File::isDirectory(public_path('tmp/thumb')))
+      $file->cleanDirectory(public_path('tmp/thumb'));
     if(File::isDirectory(public_path('tmp')))
       $file->cleanDirectory(public_path('tmp'));
   }
@@ -28,12 +30,41 @@ trait FolderStructure
     $name .= '.' . $imgFile->getClientOriginalExtension();
     $location = $path . '/' . $name;
     Image::make($imgFile)->save($location);
+
+    return $name;
+  }
+
+  public function intervene_thumb_image($imgFile, $name, $path)
+  {
+    $location_thumb = $path . '/' . $name;
+    Image::make($imgFile)->resize(null, 200, function($constraint) {
+      $constraint->aspectRatio();
+      $constraint->upsize();
+    })->save($location_thumb);
+
     return $name;
   }
 
   public function mv_tmp_image($name, $id)
   {
-    $new_path = $this->find_or_make_path(public_path('images/' . $id));
-    return File::move(public_path('tmp/' . $name), $new_path);
+    $new_path = $this->find_or_make_path('images/' . $id);
+    $new_thumb_path = $this->find_or_make_path('images/' . $id . '/thumb');
+    File::move(public_path('tmp/thumb/' . $name), $new_thumb_path . '/' . $name);
+    return File::move(public_path('tmp/' . $name), $new_path . '/' . $name);
+  }
+
+  public function mv_additional_images($names, $id)
+  {
+    $new_path = $this->find_or_make_path('images/' . $id . '/additional_files');
+    $additional_files = explode(';', $names);
+    foreach($additional_files as $add_file)
+    {
+      if(!File::move(public_path('tmp/additional/' . $add_file),
+          $new_path . '/' . $add_file))
+      {
+        return 1;
+      }
+    }
+    return 0;
   }
 }
