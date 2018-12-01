@@ -13798,6 +13798,21 @@ $(document).ready(function () {
       return closeModal();
     };
   }
+
+  var imgUpload = document.getElementById('file-upload');
+
+  if (exists(imgUpload)) {
+    imgUpload.addEventListener("change", preview_image);
+  }
+
+  function preview_image(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var output = document.getElementById('output_image');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
 });
 
 /***/ }),

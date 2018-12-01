@@ -14,6 +14,11 @@ class OrderController extends Controller
 {
     use FolderStructure;
 
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+
     public function create()
     {
       return view('orders.create');

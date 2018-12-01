@@ -72,7 +72,7 @@
               <label class="btn btn-lg btn-outline-dark input-btn">
                 <input type="file" class="upload-input d-none"
                   accept="image/x-png,image/gif,image/jpeg"
-                  name="file">
+                  name="file" id="file-upload">
                 <i class="fas fa-cloud-upload-alt"></i> Attach file
               </label>
 
@@ -90,9 +90,9 @@
             </label>
           </div>
         </div>
-        <div class="col-xs-10 offset-xs-1 col-md-3 offset-md-1">
-          <div class="d-flex w-100 h-100" style="background-color: #AAA;">
-            &nbsp;
+        <div class="col-xs-10 offset-xs-1 col-md-5 offset-md-1">
+          <div class="w-100">
+            <img src="" alt="" id="output_image" class="img-fluid">
           </div>
         </div>
       </div>

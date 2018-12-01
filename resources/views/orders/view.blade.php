@@ -34,7 +34,7 @@
                 alt="{{$order->file}}"
                 id="modal-trigger"
                 data-content="{{asset('images/' . $order->id . '/' . $order->file)}}"
-                class="img-fluid">
+                class="img-fluid modal-trigger">
             </div>
           </div>
 

@@ -150,3 +150,12 @@ ul.three-cols a:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+.modal-trigger {
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.modal-trigger:hover {
+  border: 0.1vw outset lightgray;
+}
