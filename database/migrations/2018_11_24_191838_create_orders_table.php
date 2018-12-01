@@ -21,7 +21,9 @@ class CreateOrdersTable extends Migration
             $table->string('file')->nullable();
             $table->text('additional_files')->nullable();
             $table->integer('user_id');
-            // $table->string('image');
+            $table->float('width');
+            $table->float('height');
+            $table->enum('units', ['mm', 'cm', 'in']);
             $table->timestamps();
         });
     }

@@ -106,5 +106,6 @@
         </div>
       </div>
     </form>
+    <a href="{{url('/')}}">&laquo; Back to home</a>
   </div>
 @endsection

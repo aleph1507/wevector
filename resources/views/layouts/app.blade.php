@@ -1,6 +1,7 @@
 @include('partials._head')
 <body>
     <div id="app">
+        @include('partials._modal')
         @include('partials._nav')
 
         @include('partials._messages')

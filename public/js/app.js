@@ -13772,6 +13772,32 @@ $(document).ready(function () {
   $(".select-btn").on("click", function (e) {
     set_select_btn_value($(this));
   });
+
+  var modal = document.getElementById('modal');
+
+  var modalTrigger = document.getElementById('modal-trigger');
+
+  var modalSpan = document.getElementsByClassName('close')[0];
+
+  if (exists(modal) && exists(modalTrigger)) {
+    var closeModal = function closeModal() {
+      modal.style.display = 'none';
+    };
+
+    modalTrigger.onclick = function () {
+      var modalContent = $(modalTrigger).data('content');
+      console.log($(modalTrigger).data('content'));
+      loadContent(modalContent);
+      modal.style.display = 'block';
+    };
+
+    window.onclick = function (e) {
+      if (e.target == modal) closeModal();
+    };
+    modalSpan.onclick = function (e) {
+      return closeModal();
+    };
+  }
 });
 
 /***/ }),

@@ -72,4 +72,29 @@ $(document).ready(function() {
   $(".select-btn").on("click", function(e) {
     set_select_btn_value($(this));
   });
+
+  let modal = document.getElementById('modal');
+
+  let modalTrigger = document.getElementById('modal-trigger');
+
+  let modalSpan = document.getElementsByClassName('close')[0];
+
+  if(exists(modal) && exists(modalTrigger))
+  {
+    modalTrigger.onclick = function()
+    {
+      let modalContent = $(modalTrigger).data('content');
+      console.log($(modalTrigger).data('content'));
+      loadContent(modalContent);
+      modal.style.display = 'block';
+    }
+
+    function closeModal()
+    {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = e => {if(e.target == modal) closeModal()};
+    modalSpan.onclick = e => closeModal();
+  }
 });

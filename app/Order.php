@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['name', 'orientation',
-      'color_scheme', 'file', 'additional_files', 'user_id'];
+    protected $fillable = ['name', 'orientation', 'width', 'height',
+    'units', 'color_scheme', 'file', 'additional_files', 'user_id'];
 
     public function user()
     {

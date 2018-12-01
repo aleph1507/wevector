@@ -24,14 +24,19 @@
                       <th>Thumbnail</th>
                     </thead>
                     <tbody>
-                      @for($i = 0; $i < count($orders); $i++)
+                      @for($i = count($orders)-1; $i >= 0; $i--)
                         <tr>
                           <td>{{$i+1}}</td>
                           <td>{{$orders[$i]->updated_at}}</td>
-                          <td>{{$orders[$i]->name}}</td>
                           <td>
-                            <img src="{{asset('images/' . $orders[$i]->id . '/thumb' . '/' . $orders[$i]->file)}}"
-                             alt="{{$orders[$i]->file}}">
+                            <a href="{{route('orders.view', $orders[$i]->id)}}">
+                              {{$orders[$i]->name}}
+                            </a>
+                          </td>
+                          <td>
+                            <img
+                              src="{{asset('images/' . $orders[$i]->id . '/thumb' . '/' . $orders[$i]->file)}}"
+                              alt="{{$orders[$i]->file}}" class="img-fluid">
                           </td>
                         </tr>
                       @endfor
