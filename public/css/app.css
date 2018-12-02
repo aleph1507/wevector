@@ -10625,7 +10625,21 @@ ul.three-cols a:hover {
   transition: all 0.5s;
 }
 
-.modal-trigger:hover {
-  border: 0.1vw outset lightgray;
+.main-image-overlay {
+  position: absolute;
+  z-index: 2;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  font-size: 3rem;
 }
 

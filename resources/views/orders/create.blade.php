@@ -75,9 +75,9 @@
                   name="file" id="file-upload">
                 <i class="fas fa-cloud-upload-alt"></i> Attach file
               </label>
-
               <label>Max files size 10Mb.</label>
             </div>
+            <span id="mainFileName">&nbsp;</span>
           </div>
 
           <div class="nlp">

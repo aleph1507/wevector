@@ -13751,7 +13751,6 @@ function toggle_select_btn_class(id, btn) {
 
 function set_select_btn_value(el) {
   if (exists(el.data("input")) && exists(el.data("value"))) {
-    console.log($(el.data("input")));
     $(el.data("input")).val(el.data("value"));
     toggle_select_btn_class(el.data("input"), el);
   } else if (!exists(el.data("input"))) {
@@ -13779,17 +13778,34 @@ $(document).ready(function () {
 
   var modalSpan = document.getElementsByClassName('close')[0];
 
-  if (exists(modal) && exists(modalTrigger)) {
-    var closeModal = function closeModal() {
-      modal.style.display = 'none';
-    };
+  var modalOverlay = document.getElementById('main-image-overlay');
 
-    modalTrigger.onclick = function () {
+  var mainImageContainer = document.getElementById('main-image-container');
+
+  if (exists(modal) && exists(modalTrigger)) {
+    var display_main_image_modal = function display_main_image_modal() {
       var modalContent = $(modalTrigger).data('content');
       console.log($(modalTrigger).data('content'));
       loadContent(modalContent);
       modal.style.display = 'block';
     };
+
+    var closeModal = function closeModal() {
+      modal.style.display = 'none';
+    };
+
+    var modal_trigger_rect = modalTrigger.getBoundingClientRect();
+    var modal_image_container_rect = mainImageContainer.getBoundingClientRect();
+    modalOverlay.style.height = modal_trigger_rect.height + 'px';
+    modalOverlay.style.width = modal_trigger_rect.width + 'px';
+    console.log(modalOverlay.style.position);
+    modalTrigger.addEventListener('mouseenter', function (e) {
+      modalOverlay.classList.remove('d-none');
+    });
+    modalOverlay.addEventListener('mouseleave', function (e) {
+      e.target.classList.add('d-none');
+    });
+    modalTrigger.onclick = modalOverlay.onclick = display_main_image_modal;
 
     window.onclick = function (e) {
       if (e.target == modal) closeModal();
@@ -13812,6 +13828,7 @@ $(document).ready(function () {
       output.src = reader.result;
     };
     reader.readAsDataURL(event.target.files[0]);
+    document.getElementById("mainFileName").innerHTML = event.target.value.split('\\').pop();
   }
 });
 

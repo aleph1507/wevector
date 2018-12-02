@@ -156,6 +156,31 @@ ul.three-cols a:hover {
   transition: all 0.5s;
 }
 
-.modal-trigger:hover {
-  border: 0.1vw outset lightgray;
+// .main-img-col {
+//   flex: 1 1 0;
+// }
+//
+// .main-image-container {
+//   display:flex;
+//   flex: 1 1 0;
+// }
+
+.main-image-overlay {
+  position: absolute;
+  // top: 0;
+  // left:0;
+  // right:0;
+  // bottom:0;
+  z-index:2;
+  cursor:pointer;
+  background-color: rgba(0,0,0,0.5);
+  display:flex;
+  justify-content: center;;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
 }
+
+// .modal-trigger:hover {
+//   border: 0.1vw outset lightgray;
+// }

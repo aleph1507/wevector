@@ -29,12 +29,15 @@
               </div>
             </div>
             <div
-              class="col-xs-12 col-md-6 d-flex justify-content-center align-items-center mt-3">
-              <img src="{{asset('images/' . $order->id . '/thumb' . '/' . $order->file)}}"
-                alt="{{$order->file}}"
-                id="modal-trigger"
-                data-content="{{asset('images/' . $order->id . '/' . $order->file)}}"
-                class="img-fluid modal-trigger">
+              class="col-xs-12 col-md-6 d-flex justify-content-center align-items-center mt-3 main-img-col">
+              <div class="main-image-container" id="main-image-container">
+                <div class="main-image-overlay d-none" id="main-image-overlay">+</div>
+                <img src="{{asset('images/' . $order->id . '/thumb' . '/' . $order->file)}}"
+                  alt="{{$order->file}}"
+                  id="modal-trigger"
+                  data-content="{{asset('images/' . $order->id . '/' . $order->file)}}"
+                  class="img-fluid modal-trigger">
+              </div>
             </div>
           </div>
 
@@ -44,6 +47,7 @@
                 @foreach(explode(';', $order->additional_files) as $add_file)
                   <li class="border-bottom border-info pt-2">
                     <a
+                      target="_blank"
                       href="{{asset('images/' . $order->id . '/additional_files' . '/' . $add_file)}}">
                       {{$add_file}}
                     </a>
