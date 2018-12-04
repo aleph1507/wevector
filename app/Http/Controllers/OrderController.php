@@ -19,6 +19,11 @@ class OrderController extends Controller
       $this->middleware('auth');
     }
 
+    public function index()
+    {
+      return view('orders.index')->with('activeOrders', Order::active());
+    }
+
     public function create()
     {
       return view('orders.create');
@@ -46,10 +51,15 @@ class OrderController extends Controller
       $tmp = $this->find_or_make_path('tmp');
       $tmp_add_path = $this->find_or_make_path('tmp/additional');
       $tmp_thumb_path = $this->find_or_make_path('tmp/thumb');
+      $tmp_sm_thumb_path = $this->find_or_make_path('tmp/thumb/sm');
 
-      $tmp_img = $this->intervene_image($request->file('file'), time(), $tmp);
+      $new_file_name = time();
+
+      $tmp_img = $this->intervene_image($request->file('file'), $new_file_name, $tmp);
       $tmp_thumb_img =
         $this->intervene_thumb_image($request->file('file'), $tmp_img, $tmp_thumb_path);
+      $tmp_sm_thumb_img =
+        $this->intervene_image($request->file('file'), $new_file_name, $tmp_sm_thumb_path, 200);
 
       if($request->file('additional_files'))
       {

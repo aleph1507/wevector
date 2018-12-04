@@ -25,11 +25,14 @@ trait FolderStructure
       $file->cleanDirectory(public_path('tmp'));
   }
 
-  public function intervene_image($imgFile, $name, $path)
+  public function intervene_image($imgFile, $name, $path, $fit=null)
   {
     $name .= '.' . $imgFile->getClientOriginalExtension();
     $location = $path . '/' . $name;
-    Image::make($imgFile)->save($location);
+    if($fit == null)
+      Image::make($imgFile)->save($location);
+    else
+      Image::make($imgFile)->fit($fit,$fit)->save($location);
 
     return $name;
   }
@@ -49,6 +52,8 @@ trait FolderStructure
   {
     $new_path = $this->find_or_make_path('images/' . $id);
     $new_thumb_path = $this->find_or_make_path('images/' . $id . '/thumb');
+    $new_sm_thumb_path = $this->find_or_make_path('images/' . $id . '/thumb' . '/sm');
+    File::move(public_path('tmp/thumb/sm/' . $name), $new_sm_thumb_path . '/' . $name);
     File::move(public_path('tmp/thumb/' . $name), $new_thumb_path . '/' . $name);
     return File::move(public_path('tmp/' . $name), $new_path . '/' . $name);
   }
