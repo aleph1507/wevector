@@ -156,21 +156,8 @@ ul.three-cols a:hover {
   transition: all 0.5s;
 }
 
-// .main-img-col {
-//   flex: 1 1 0;
-// }
-//
-// .main-image-container {
-//   display:flex;
-//   flex: 1 1 0;
-// }
-
 .main-image-overlay {
   position: absolute;
-  // top: 0;
-  // left:0;
-  // right:0;
-  // bottom:0;
   z-index:2;
   cursor:pointer;
   background-color: rgba(0,0,0,0.5);
@@ -181,6 +168,115 @@ ul.three-cols a:hover {
   font-size: 3rem;
 }
 
-// .modal-trigger:hover {
-//   border: 0.1vw outset lightgray;
-// }
+.btn-pink {
+  background-color: #f0386b;
+}
+
+.btn-round-1 {
+  font-size: 1.5rem;
+  border-radius: 50%;
+  padding: 0 11px;
+}
+
+.menu-span-1 {
+  font-family: latoRegular;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  padding-left: 1rem;
+  font-size: 16px;
+  color:#333333;
+  text-align: right;
+}
+
+.new_illustraion_div {
+  cursor:pointer;
+  transition: all 0.2s;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+.new_illustraion_div:hover {
+  background-color: #fff;
+}
+
+.light-height-1 {
+  font-family: latoLight;
+  font-size: 30px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 31px;
+  letter-spacing: 0.94px;
+  color: #333333;
+}
+
+.orders-tabs {
+  font-family: 'Helvetica', sans-serif;
+  font-size:18px;
+  border-bottom: 2px solid #444444;
+}
+
+.orders-tabs a {
+  font-family: 'Helvetica', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  border:0 !important;
+  font-size:18px;
+  letter-spacing: 0.5px;
+  color:#5d5d5d;
+  transition: all 0.2s;
+}
+
+.orders-tabs a.active {
+  color: #444444;
+  border-bottom: 5px solid #f0386b !important;
+}
+
+.pl90 {
+  padding-left:90px;
+}
+
+.col-2-filler {
+  flex: 0 0 6.99%;
+  max-width: 6.99%;
+}
+
+.order-row {
+  background-color: #ffffff;
+  border-bottom: 1px inset lightgrey;
+  border-right: 1px inset lightgrey;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 15px;
+  color: #5c5c5c;
+  transition: all 0.2s;
+}
+
+.order-row:hover {
+  border-bottom: 2px inset lightgrey;
+  border-right: 2px inset lightgrey;
+  box-shadow: 0.2em 0.1em lightgrey;
+  background-color: #fefefe;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+
+.order-row div {
+  display:flex;
+  align-items: center;
+}
+
+.t-header {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: oblique;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #343434;
+}

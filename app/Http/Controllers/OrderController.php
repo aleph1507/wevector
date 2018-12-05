@@ -21,7 +21,9 @@ class OrderController extends Controller
 
     public function index()
     {
-      return view('orders.index')->with('activeOrders', Order::active());
+      $activeOrders = Order::active();
+      $completedOrders = Order::completed();
+      return view('orders.index')->with(compact('activeOrders', 'completedOrders'));
     }
 
     public function create()
@@ -59,7 +61,7 @@ class OrderController extends Controller
       $tmp_thumb_img =
         $this->intervene_thumb_image($request->file('file'), $tmp_img, $tmp_thumb_path);
       $tmp_sm_thumb_img =
-        $this->intervene_image($request->file('file'), $new_file_name, $tmp_sm_thumb_path, 200);
+        $this->intervene_image($request->file('file'), $new_file_name, $tmp_sm_thumb_path, 61, 60);
 
       if($request->file('additional_files'))
       {

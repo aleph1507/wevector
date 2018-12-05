@@ -25,14 +25,14 @@ trait FolderStructure
       $file->cleanDirectory(public_path('tmp'));
   }
 
-  public function intervene_image($imgFile, $name, $path, $fit=null)
+  public function intervene_image($imgFile, $name, $path, $fitX=null, $fitY=null)
   {
     $name .= '.' . $imgFile->getClientOriginalExtension();
     $location = $path . '/' . $name;
-    if($fit == null)
+    if($fitX == null || $fitY == null)
       Image::make($imgFile)->save($location);
     else
-      Image::make($imgFile)->fit($fit,$fit)->save($location);
+      Image::make($imgFile)->fit($fitX,$fitY)->save($location);
 
     return $name;
   }

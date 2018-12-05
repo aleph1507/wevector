@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isActivated()
     {
-        return $this->activated;
+        return !($this->email_verified_at == null);
     }
 
     /**

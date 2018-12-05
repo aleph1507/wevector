@@ -14,7 +14,7 @@ class Order extends Model
       return $this->belongsTo('App\User');
     }
 
-    public function completed()
+    public static function completed()
     {
       return static::where('completed', true)->get();
     }
