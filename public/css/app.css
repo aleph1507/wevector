@@ -10766,3 +10766,7 @@ ul.three-cols a:hover {
   color: #343434;
 }
 
+.orders-tabs a {
+  width: 13em;
+}
+

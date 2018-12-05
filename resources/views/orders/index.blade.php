@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container">
+  <div class="container pt-5">
     <div class="row d-flex justify-content-between align-items-between">
       <h1 class="text-uppercase light-height-1 pt-3">requests</h1>
       <div class="new_illustraion_div" id="new_illustraion_div">
@@ -14,11 +14,11 @@
     <div class="list-orders mt-5">
       <ul class="nav nav-tabs orders-tabs" role="tablist">
         <li class="nav-item">
-          <a data-toggle="tab" class="nav-link active" href="#active"
+          <a data-toggle="tab" class="nav-link active text-center" href="#active"
             role="tab" aria-controls="active" aria-selected="true">Active</a>
         </li>
         <li class="nav-item">
-          <a data-toggle="tab" class="nav-link" href="#completed"
+          <a data-toggle="tab" class="nav-link text-center" href="#completed"
             role="tab" aria-controls="profile" aria-selected="false">Completed</a>
         </li>
       </ul>
