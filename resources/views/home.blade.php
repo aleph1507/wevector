@@ -22,7 +22,7 @@
                       <h1 class="mt-5 mb-5">You haven't ordered anything yet.</h1>
                     @endif
 
-                  <table class="table table-hover table-striped">
+                  {{-- <table class="table table-hover table-striped">
                     <thead>
                       <th>Index</th>
                       <th>Date</th>
@@ -47,7 +47,7 @@
                         </tr>
                       @endfor
                     </tbody>
-                  </table>
+                  </table> --}}
                 </div>
             </div>
         </div>

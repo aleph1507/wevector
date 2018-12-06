@@ -46,8 +46,22 @@
                     <li class="nav-item">
                       <a class="nav-link">Credits <span class="badge-pill badge-warning px-2 py-1">{{Auth::user()->credits}}</span></a>
                     </li>
+                    <li>
+                      <div class="sidenav" id="mySidenav">
+                        <a href="javascript:void(0)" class="closebtn"
+                          id="closeNavBtn">&times;</a>
+                        <a href="#">About</a>
+                        <a href="#">Services</a>
+                        <a href="#">Clients</a>
+                        <a href="#">Contact</a>
+                      </div>
+                    </li>
+
                 @endguest
             </ul>
+            @if(Auth::check())
+              <span id="openNavSpan"><i class="fas fa-bars"></i></span>
+            @endif
         </div>
     </div>
 </nav>

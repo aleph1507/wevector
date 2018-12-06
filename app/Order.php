@@ -16,11 +16,11 @@ class Order extends Model
 
     public static function completed()
     {
-      return static::where('completed', true)->get();
+      return static::orderBy('updated_at', 'desc')->where('completed', true)->get();
     }
 
     public static function active()
     {
-      return static::where('completed', false)->get();
+      return static::orderBy('updated_at', 'desc')->where('completed', false)->get();
     }
 }

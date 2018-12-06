@@ -13767,7 +13767,32 @@ function select_btn_input(id) {
   }
 }
 
+function openNav(e) {
+  if (document.getElementById("mySidenav").style.width != "250px") {
+    document.getElementById("mySidenav").style.width = "250px";
+    console.log('open: ' + e.target.innerHTML);
+    console.log('e.target: ', e.target);
+    document.getElementById('openNavSpan').innerHTML = '&times;';
+  } else {
+    document.getElementById("mySidenav").style.width = "0";
+    console.log('close: ' + e.target.innerHTML);
+    console.log('e.target: ', e.target);
+    document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars"></i>';
+  }
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav(e) {
+  document.getElementById("mySidenav").style.width = "0";
+  e.target.innerHTML = '<i class="fas fa-bars"></i>';
+}
+
 $(document).ready(function () {
+
+  document.getElementById('openNavSpan').addEventListener("click", openNav);
+
+  document.getElementById('closeNavBtn').addEventListener("click", closeNav);
+
   $(".select-btn").on("click", function (e) {
     set_select_btn_value($(this));
   });

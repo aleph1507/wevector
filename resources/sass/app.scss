@@ -28,6 +28,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import 'sidenav';
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -254,6 +256,8 @@ ul.three-cols a:hover {
   font-size: 15px;
   color: #5c5c5c;
   transition: all 0.2s;
+  width: 100%;
+  margin:auto;
 }
 
 .order-row:hover {
@@ -281,6 +285,35 @@ ul.three-cols a:hover {
   color: #343434;
 }
 
+.orders-tabs {
+  margin-bottom: 1em;
+}
+
 .orders-tabs a {
-  width: 13em;
+  width: 10em;
+}
+
+.orders-sm {
+  background-color: #ffffff;
+  border-bottom: 1px inset lightgrey;
+  border-right: 1px inset lightgrey;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 15px;
+  color: #5c5c5c;
+  transition: all 0.2s;
+  width: 100%;
+  margin:auto;
+}
+
+.orders-sm:hover {
+  border-bottom: 2px inset lightgrey;
+  border-right: 2px inset lightgrey;
+  box-shadow: 0.2em 0.1em lightgrey;
+  background-color: #fefefe;
+  font-size: 15px;
+  color: #2a2a2a;
+}
+
+.orders-sm .col-9 > .row {
+  margin: 0.5% 0;
 }
