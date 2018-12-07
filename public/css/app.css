@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@font-face {
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Merriweather);@font-face {
   font-family: latoBlack;
   src: url(/fonts/lato_black.ttf?77d353744697c77955f9bacc7f3ed90a);
 }
@@ -10486,6 +10486,11 @@ a.text-dark:focus {
   }
 }
 
+@font-face {
+  font-family: latoRegular;
+  src: url(/fonts/lato_regular.ttf?7f690e503a254e0b8349aec0177e07aa);
+}
+
 /* The side navigation menu */
 
 .sidenav {
@@ -10567,6 +10572,51 @@ a.text-dark:focus {
   width: 2em;
   float: right;
   margin-left: 5%;
+}
+
+nav > .container {
+  position: relative;
+  line-height: 40px;
+}
+
+.navbar-brand {
+  font-family: 'Merriweather', serif;
+  color: black;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.additional-btns {
+  font-family: latoRegular;
+  font-size: 18px;
+  letter-spacing: 0.45px;
+  color: #000000;
+  display: inline-block;
+  float: right;
+  padding-top: 0 !important;
+}
+
+.additional-btns > a {
+  font-family: latoRegular;
+  font-size: 18px;
+  letter-spacing: 0.45px;
+  color: #000000;
+  margin-right: 2em;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+#openNavSpan {
+  margin-right: 0;
+}
+
+.sidenav a:not(.closebtn) {
+  padding-left: 20%;
+}
+
+.sidenav a:not(.closebtn):hover {
+  background-color: white;
+  color: black;
 }
 
 .navbar-laravel {
