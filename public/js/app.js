@@ -13770,22 +13770,61 @@ function select_btn_input(id) {
 function openNav(e) {
   if (document.getElementById("mySidenav").style.width != "350px") {
     document.getElementById("mySidenav").style.width = "350px";
-    console.log('open: ' + e.target.innerHTML);
-    console.log('e.target: ', e.target);
     document.getElementById('openNavSpan').innerHTML = '&times;';
   } else {
     closeNav(e);
-    // document.getElementById("mySidenav").style.width = "0";
-    // console.log('close: ' + e.target.innerHTML);
-    // console.log('e.target: ', e.target);
-    // document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars"></i>';
   }
+}
+
+function renderOrders(orders, element) {
+  var order_html = '';
+  for (var i = 0; i < orders.data.data.length; i++) {
+    var o = orders.data.data[i];
+    order_html += '\n      <a href="/orders/' + o.id + '" class="d-none d-md-block">\n        <div class="d-flex mt-2 mb-2 order-row row">\n          <div class="col-md-1">\n            <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n            alt="image of ' + o.name + '" class="mr-3">\n          </div>\n            <div class="col-md-2 align-middle">\n              <span>' + o.name + '</span>\n            </div>\n            <div class="col-md-2 align-middle">' + o.id + '</div>\n            <div class="col-md-2 align-middle">Rushi</div>\n            <div class="col-md-2 align-middle">' + o.created_at + '</div>\n            <div class="col-md-2 align-middle">Pocinat</div>\n            <div class="col-md-1 align-middle">Jok</div>\n        </div>\n      </a>\n      <a href="/orders/' + o.id + '" class="d-block d-md-none">\n        <div class="d-flex mt-2 mb-2 orders-sm row">\n          <div class="col-3">\n          <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n          alt="image of ' + o.name + '" class="mr-3">\n          </div>\n          <div class="col-9">\n            <div class="row">\n              <div class="col-6">\n                <span>Name: </span> <span>' + o.name + '</span>\n              </div>\n              <div class="col-6">\n                <span>ID: </span> <span>' + o.id + '</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Comments: </span> <span>Jok</span>\n              </div>\n              <div class="col-6">\n                <span>Status: </span> <span>Pocinat</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Type: </span> <span>Rushi</span>\n              </div>\n              <div class="col-6">\n                <span>Sent on: </span> <span>' + o.created_at + '</span>\n              </div>\n            </div>\n          </div>\n        </div>\n      </a>\n    ';
+  }
+  element.innerHTML = order_html;
+  //             <span>Sent on: </span> <span>{{$ao->created_at->format('d/m/Y')}}</span>
+}
+
+function createPaginatorBtn(page, query) {
+  var current = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+  return '<div class="paginator-btn ' + current + '" data-query="' + query + '" data-page="' + page + '">' + page + '</div>';
+}
+
+function updatePaginator(paginator, current_page, last_page, query) {
+  console.log('paginator: ', paginator);
+  console.log('current_page: ', current_page);
+  console.log('last_page: ', last_page);
+  if (last_page == 1) {
+    paginator.style.display = 'none';
+    return;
+  }
+  for (var i = 1; i <= last_page; i++) {
+    paginator.innerHTML += i == current_page ? createPaginatorBtn(i, query, 'current') : createPaginatorBtn(i, query);
+  }
+}
+
+function getPage(page, element, paginator, query) {
+  var url = '';
+  if (query == 'active') url = '/orders/active?page=' + page;
+  axios.get(url).then(function (response) {
+    console.log(response);
+    updatePaginator(paginator, response.data.current_page, response.data.last_page, query);
+    renderOrders(response, element);
+  }).catch(function (error) {}).then(function () {
+    //always executed
+  });
+}
+
+function goToPage(e) {
+  console.log($(e).data("query"));
+  console.log($(e).data("page"));
 }
 
 /* Set the width of the side navigation to 0 */
 function closeNav(e) {
   document.getElementById("mySidenav").style.width = "0";
-  // e.target.innerHTML = '<i class="fas fa-bars"></i>';
   document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars fa-lg"></i>';
 }
 
@@ -13809,10 +13848,20 @@ $(document).ready(function () {
 
   var mainImageContainer = document.getElementById('main-image-container');
 
+  var active = document.querySelector('.tab-content > div#active');
+
+  var completed = document.querySelector('.tab-content > div#completed');
+
+  var ordersPage = 1;
+
+  if (exists(active) && exists(completed)) {
+    var paginationLinks = document.getElementById('paginationLinks');
+    getPage(ordersPage, active, paginationLinks, 'active');
+  }
+
   if (exists(modal) && exists(modalTrigger)) {
     var display_main_image_modal = function display_main_image_modal() {
       var modalContent = $(modalTrigger).data('content');
-      console.log($(modalTrigger).data('content'));
       loadContent(modalContent);
       modal.style.display = 'block';
     };
@@ -13825,7 +13874,6 @@ $(document).ready(function () {
     var modal_image_container_rect = mainImageContainer.getBoundingClientRect();
     modalOverlay.style.height = modal_trigger_rect.height + 'px';
     modalOverlay.style.width = modal_trigger_rect.width + 'px';
-    console.log(modalOverlay.style.position);
     modalTrigger.addEventListener('mouseenter', function (e) {
       modalOverlay.classList.remove('d-none');
     });

@@ -6,8 +6,10 @@
 
 
       @guest
-        <a class="nav-link" style="display:inline-block;" href="{{ route('login') }}">{{ __('Login') }}</a>
-        <a class="nav-link" style="display:inline-block;" href="{{ route('register') }}">{{ __('Register') }}</a>
+        <div class="additional-btns ml-auto">
+          <a class="nav-link" style="display:inline-block;" href="{{ route('login') }}">{{ __('Login') }}</a>
+          <a class="nav-link" style="display:inline-block;" href="{{ route('register') }}">{{ __('Register') }}</a>
+        </div>
       @else
         <span class="ml-auto bars-span" style="float:right;" id="openNavSpan"><i class="fas fa-bars fa-lg"></i></span>
         <div class="sidenav" id="mySidenav">

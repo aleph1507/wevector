@@ -37,7 +37,7 @@
       </div>
       <div class="tab-content">
         <div class="tab-pane fade show active mt-xs-5 mt-sm-5 mt-md-0" id="active">
-            @foreach($activeOrders as $ao)
+            {{-- @foreach($activeOrders as $ao)
               <a href="{{route('orders.view', $ao->id)}}" class="d-none d-md-block">
                 <div class="d-flex mt-2 mb-2 order-row row">
                   <div class="col-md-1">
@@ -89,9 +89,11 @@
                 </div>
               </a>
             @endforeach
+            {{$activeOrders->links()}} --}}
+
         </div>
         <div class="tab-pane fade" id="completed">
-          @foreach($completedOrders as $co)
+          {{-- @foreach($completedOrders as $co)
             <a href="{{route('orders.view', $co->id)}}" class="d-none d-md-block">
               <div class="d-flex mt-2 mb-2 order-row row">
                 <div class="col-md-1">
@@ -142,9 +144,10 @@
                 </div>
               </div>
             </a>
-          @endforeach
+          @endforeach --}}
         </div>
       </div>
+      <div class="paginator" id="paginationLinks"></div>
     </div>
     <a href="{{url('/')}}">&laquo; Back to home</a>
   </div>

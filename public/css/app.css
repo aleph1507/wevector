@@ -10936,3 +10936,22 @@ ul.three-cols a:hover {
   margin: 0.5% 0;
 }
 
+.paginator {
+  text-align: center;
+}
+
+.paginator-btn {
+  display: inline-block;
+  padding: 0.2em 0.7em;
+  background-color: #ffffff;
+  border: 1px solid black;
+  cursor: pointer;
+  color: blue;
+}
+
+.paginator-btn.current {
+  background-color: lightgray;
+  color: black;
+  text-decoration: underline;
+}
+

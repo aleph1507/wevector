@@ -22,6 +22,10 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/orders/active', 'OrderController@activeOrders')->name('orders.active');
+
+Route::get('/orders/completed', 'OrderController@completedOrders');
+
 Route::get('/orders/index', 'OrderController@index')->name('orders.index');
 
 Route::get('/orders/create', 'OrderController@create')->name('orders.create');

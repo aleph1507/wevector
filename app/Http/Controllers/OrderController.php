@@ -21,9 +21,13 @@ class OrderController extends Controller
 
     public function index()
     {
-      $activeOrders = Order::active();
-      $completedOrders = Order::completed();
-      return view('orders.index')->with(compact('activeOrders', 'completedOrders'));
+      // $activeOrders = Order::active()->latest()->paginate(2);
+      // dd(json_encode($activeOrders));
+      // return json_encode($activeOrders);
+      // $completedOrders = Order::completed()->latest()->paginate(2);
+      // return view('orders.index')->with(compact('activeOrders', 'completedOrders'));
+      // $orders = json_encode(Order::active());
+      return view('orders.index');
     }
 
     public function create()
@@ -93,5 +97,15 @@ class OrderController extends Controller
     public function view($id)
     {
       return view('orders.view')->with('order', Auth::user()->orders->find($id));
+    }
+
+    public function activeOrders()
+    {
+      return json_encode(Order::active()->latest()->paginate(2));
+    }
+
+    public function completedOrders()
+    {
+      return json_encode(Order::completed()->latest()->paginate(2));
     }
 }

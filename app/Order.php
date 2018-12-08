@@ -14,13 +14,13 @@ class Order extends Model
       return $this->belongsTo('App\User');
     }
 
-    public static function completed()
+    public static function scopeCompleted($query, $val=null)
     {
-      return static::orderBy('updated_at', 'desc')->where('completed', true)->get();
+      return $query->where('completed', true);
     }
 
-    public static function active()
+    public static function scopeActive($query, $val=null)
     {
-      return static::orderBy('updated_at', 'desc')->where('completed', false)->get();
+      return $query->where('completed', false);
     }
 }
