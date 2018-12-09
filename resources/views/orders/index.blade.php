@@ -17,11 +17,13 @@
       <ul class="nav nav-tabs orders-tabs" role="tablist">
         <li class="nav-item">
           <a data-toggle="tab" class="nav-link active text-center" href="#active"
-            role="tab" aria-controls="active" aria-selected="true">Active</a>
+            role="tab" aria-controls="active"
+            id="activeTab" aria-selected="true">Active</a>
         </li>
         <li class="nav-item">
           <a data-toggle="tab" class="nav-link text-center" href="#completed"
-            role="tab" aria-controls="profile" aria-selected="false">Completed</a>
+            role="tab" aria-controls="profile"
+            id="completedTab" aria-selected="false">Completed</a>
         </li>
       </ul>
       <div class="d-none d-md-block">

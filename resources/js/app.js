@@ -96,7 +96,7 @@ function renderOrders(orders, element)
             <div class="col-md-2 align-middle">${o.id}</div>
             <div class="col-md-2 align-middle">Rushi</div>
             <div class="col-md-2 align-middle">${o.created_at}</div>
-            <div class="col-md-2 align-middle">Pocinat</div>
+            <div class="col-md-2 align-middle">${o.status}</div>
             <div class="col-md-1 align-middle">Jok</div>
         </div>
       </a>
@@ -120,7 +120,7 @@ function renderOrders(orders, element)
                 <span>Comments: </span> <span>Jok</span>
               </div>
               <div class="col-6">
-                <span>Status: </span> <span>Pocinat</span>
+                <span>Status: </span> <span>${o.status}</span>
               </div>
             </div>
             <div class="row">
@@ -148,14 +148,13 @@ function createPaginatorBtn(page, query, current = '')
 
 function updatePaginator(paginator, current_page, last_page, query)
 {
-  console.log('paginator: ', paginator);
-  console.log('current_page: ', current_page);
-  console.log('last_page: ', last_page);
   if(last_page == 1)
   {
     paginator.style.display = 'none';
     return;
   }
+  paginator.style.display = 'block';
+  paginator.innerHTML = '';
   for(let i = 1; i<=last_page; i++)
     paginator.innerHTML += i == current_page ? createPaginatorBtn(i, query, 'current') : createPaginatorBtn(i, query);
 }
@@ -164,30 +163,38 @@ function getPage(page, element, paginator, query)
 {
   let url = '';
   if(query == 'active') url = '/orders/active?page=' + page;
+  if(query == 'completed') url = '/orders/completed?page=' + page;
+  let success = null;
   axios.get(url)
     .then(function(response) {
-      console.log(response);
+      // console.log(response);
       updatePaginator(paginator, response.data.current_page, response.data.last_page, query);
       renderOrders(response, element);
+      setPaginationEvents(element, paginator, query, document.querySelectorAll('.paginator-btn'));
+      success = 0;
     })
     .catch(function(error) {
-
-    })
-    .then(function() {
-      //always executed
+      success = 1;
     });
-}
-
-function goToPage(e)
-{
-  console.log($(e).data("query"));
-  console.log($(e).data("page"));
+    // .then(function() {
+    //   //always executed
+    // });
+    return success;
 }
 
 /* Set the width of the side navigation to 0 */
 function closeNav(e) {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars fa-lg"></i>';
+}
+
+function setPaginationEvents(element, paginator, query, paginatorBtns)
+{
+  for(let pb of paginatorBtns) {
+    pb.addEventListener('click', function(e) {
+      getPage($(pb).data('page'), element, paginator, $(pb).data('query'))
+    });
+  }
 }
 
 $(document).ready(function() {
@@ -214,12 +221,31 @@ $(document).ready(function() {
 
   let completed = document.querySelector('.tab-content > div#completed');
 
+  let activeTab = document.getElementById('activeTab');
+
+  let completedTab = document.getElementById('completedTab');
+
+  let currentlyActive = null;
+
   let ordersPage = 1;
 
   if(exists(active) && exists(completed))
   {
     let paginationLinks = document.getElementById('paginationLinks');
-    getPage(ordersPage, active, paginationLinks, 'active');
+    currentlyActive = 'active';
+    getPage(ordersPage, active, paginationLinks, currentlyActive);
+    // console.log('active: ', active);
+    // console.log('completed: ', completed);
+    activeTab.addEventListener('click', function(tab) {
+      currentlyActive = 'active';
+      console.log(currentlyActive);
+      getPage(ordersPage, active, paginationLinks, currentlyActive);
+    });
+    completedTab.addEventListener('click', function(tab) {
+      currentlyActive = 'completed';
+      console.log(currentlyActive);
+      getPage(ordersPage, active, paginationLinks, currentlyActive);
+    });
   }
 
   if(exists(modal) && exists(modalTrigger))

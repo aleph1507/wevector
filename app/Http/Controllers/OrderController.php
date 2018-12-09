@@ -21,12 +21,6 @@ class OrderController extends Controller
 
     public function index()
     {
-      // $activeOrders = Order::active()->latest()->paginate(2);
-      // dd(json_encode($activeOrders));
-      // return json_encode($activeOrders);
-      // $completedOrders = Order::completed()->latest()->paginate(2);
-      // return view('orders.index')->with(compact('activeOrders', 'completedOrders'));
-      // $orders = json_encode(Order::active());
       return view('orders.index');
     }
 

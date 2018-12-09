@@ -16,11 +16,13 @@ class Order extends Model
 
     public static function scopeCompleted($query, $val=null)
     {
-      return $query->where('completed', true);
+      // return $query->where('completed', true);
+      return $query->where('status', 'completed');
     }
 
     public static function scopeActive($query, $val=null)
     {
-      return $query->where('completed', false);
+      // return $query->where('completed', false);
+      return $query->where('status', '!=', 'Completed');
     }
 }

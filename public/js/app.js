@@ -13780,7 +13780,7 @@ function renderOrders(orders, element) {
   var order_html = '';
   for (var i = 0; i < orders.data.data.length; i++) {
     var o = orders.data.data[i];
-    order_html += '\n      <a href="/orders/' + o.id + '" class="d-none d-md-block">\n        <div class="d-flex mt-2 mb-2 order-row row">\n          <div class="col-md-1">\n            <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n            alt="image of ' + o.name + '" class="mr-3">\n          </div>\n            <div class="col-md-2 align-middle">\n              <span>' + o.name + '</span>\n            </div>\n            <div class="col-md-2 align-middle">' + o.id + '</div>\n            <div class="col-md-2 align-middle">Rushi</div>\n            <div class="col-md-2 align-middle">' + o.created_at + '</div>\n            <div class="col-md-2 align-middle">Pocinat</div>\n            <div class="col-md-1 align-middle">Jok</div>\n        </div>\n      </a>\n      <a href="/orders/' + o.id + '" class="d-block d-md-none">\n        <div class="d-flex mt-2 mb-2 orders-sm row">\n          <div class="col-3">\n          <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n          alt="image of ' + o.name + '" class="mr-3">\n          </div>\n          <div class="col-9">\n            <div class="row">\n              <div class="col-6">\n                <span>Name: </span> <span>' + o.name + '</span>\n              </div>\n              <div class="col-6">\n                <span>ID: </span> <span>' + o.id + '</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Comments: </span> <span>Jok</span>\n              </div>\n              <div class="col-6">\n                <span>Status: </span> <span>Pocinat</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Type: </span> <span>Rushi</span>\n              </div>\n              <div class="col-6">\n                <span>Sent on: </span> <span>' + o.created_at + '</span>\n              </div>\n            </div>\n          </div>\n        </div>\n      </a>\n    ';
+    order_html += '\n      <a href="/orders/' + o.id + '" class="d-none d-md-block">\n        <div class="d-flex mt-2 mb-2 order-row row">\n          <div class="col-md-1">\n            <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n            alt="image of ' + o.name + '" class="mr-3">\n          </div>\n            <div class="col-md-2 align-middle">\n              <span>' + o.name + '</span>\n            </div>\n            <div class="col-md-2 align-middle">' + o.id + '</div>\n            <div class="col-md-2 align-middle">Rushi</div>\n            <div class="col-md-2 align-middle">' + o.created_at + '</div>\n            <div class="col-md-2 align-middle">' + o.status + '</div>\n            <div class="col-md-1 align-middle">Jok</div>\n        </div>\n      </a>\n      <a href="/orders/' + o.id + '" class="d-block d-md-none">\n        <div class="d-flex mt-2 mb-2 orders-sm row">\n          <div class="col-3">\n          <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n          alt="image of ' + o.name + '" class="mr-3">\n          </div>\n          <div class="col-9">\n            <div class="row">\n              <div class="col-6">\n                <span>Name: </span> <span>' + o.name + '</span>\n              </div>\n              <div class="col-6">\n                <span>ID: </span> <span>' + o.id + '</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Comments: </span> <span>Jok</span>\n              </div>\n              <div class="col-6">\n                <span>Status: </span> <span>' + o.status + '</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Type: </span> <span>Rushi</span>\n              </div>\n              <div class="col-6">\n                <span>Sent on: </span> <span>' + o.created_at + '</span>\n              </div>\n            </div>\n          </div>\n        </div>\n      </a>\n    ';
   }
   element.innerHTML = order_html;
   //             <span>Sent on: </span> <span>{{$ao->created_at->format('d/m/Y')}}</span>
@@ -13793,13 +13793,12 @@ function createPaginatorBtn(page, query) {
 }
 
 function updatePaginator(paginator, current_page, last_page, query) {
-  console.log('paginator: ', paginator);
-  console.log('current_page: ', current_page);
-  console.log('last_page: ', last_page);
   if (last_page == 1) {
     paginator.style.display = 'none';
     return;
   }
+  paginator.style.display = 'block';
+  paginator.innerHTML = '';
   for (var i = 1; i <= last_page; i++) {
     paginator.innerHTML += i == current_page ? createPaginatorBtn(i, query, 'current') : createPaginatorBtn(i, query);
   }
@@ -13808,24 +13807,60 @@ function updatePaginator(paginator, current_page, last_page, query) {
 function getPage(page, element, paginator, query) {
   var url = '';
   if (query == 'active') url = '/orders/active?page=' + page;
+  if (query == 'completed') url = '/orders/completed?page=' + page;
+  var success = null;
   axios.get(url).then(function (response) {
-    console.log(response);
+    // console.log(response);
     updatePaginator(paginator, response.data.current_page, response.data.last_page, query);
     renderOrders(response, element);
-  }).catch(function (error) {}).then(function () {
-    //always executed
+    setPaginationEvents(element, paginator, query, document.querySelectorAll('.paginator-btn'));
+    success = 0;
+  }).catch(function (error) {
+    success = 1;
   });
-}
-
-function goToPage(e) {
-  console.log($(e).data("query"));
-  console.log($(e).data("page"));
+  // .then(function() {
+  //   //always executed
+  // });
+  return success;
 }
 
 /* Set the width of the side navigation to 0 */
 function closeNav(e) {
   document.getElementById("mySidenav").style.width = "0";
   document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars fa-lg"></i>';
+}
+
+function setPaginationEvents(element, paginator, query, paginatorBtns) {
+  var _loop = function _loop(pb) {
+    pb.addEventListener('click', function (e) {
+      getPage($(pb).data('page'), element, paginator, $(pb).data('query'));
+    });
+  };
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = paginatorBtns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var pb = _step.value;
+
+      _loop(pb);
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
 }
 
 $(document).ready(function () {
@@ -13852,11 +13887,30 @@ $(document).ready(function () {
 
   var completed = document.querySelector('.tab-content > div#completed');
 
+  var activeTab = document.getElementById('activeTab');
+
+  var completedTab = document.getElementById('completedTab');
+
+  var currentlyActive = null;
+
   var ordersPage = 1;
 
   if (exists(active) && exists(completed)) {
     var paginationLinks = document.getElementById('paginationLinks');
-    getPage(ordersPage, active, paginationLinks, 'active');
+    currentlyActive = 'active';
+    getPage(ordersPage, active, paginationLinks, currentlyActive);
+    // console.log('active: ', active);
+    // console.log('completed: ', completed);
+    activeTab.addEventListener('click', function (tab) {
+      currentlyActive = 'active';
+      console.log(currentlyActive);
+      getPage(ordersPage, active, paginationLinks, currentlyActive);
+    });
+    completedTab.addEventListener('click', function (tab) {
+      currentlyActive = 'completed';
+      console.log(currentlyActive);
+      getPage(ordersPage, active, paginationLinks, currentlyActive);
+    });
   }
 
   if (exists(modal) && exists(modalTrigger)) {

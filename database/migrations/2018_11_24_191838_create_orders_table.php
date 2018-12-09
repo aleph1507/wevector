@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->float('width');
             $table->float('height');
             $table->enum('units', ['mm', 'cm', 'in']);
-            $table->boolean('completed')->default(false);
+            $table->enum('status', ['Recieved', 'In Process', 'On Hold', 'Completed'])->default('Recieved');
             $table->timestamps();
         });
     }
