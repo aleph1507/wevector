@@ -19,6 +19,9 @@
           <a href="{{route('orders.index')}}"><i class="fas fa-pen"></i> Requests</a>
           <a href="#"><i class="far fa-user-circle"></i> Your account</a>
           <a href="#">Buy illustrations</a>
+          @if(Auth::user()->isAdmin())
+            <a href="{{route('users.index')}}">See Users</a>
+          @endif
           <br><br>
           <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();

@@ -33,3 +33,11 @@ Route::get('/orders/create', 'OrderController@create')->name('orders.create');
 Route::post('/orders/store', 'OrderController@store')->name('orders.store');
 
 Route::get('/orders/{id}', 'OrderController@view')->name('orders.view');
+
+Route::get('/users', 'UserController@index')->name('users.index');
+
+Route::post('/users/aadmin/{id}', 'UserController@addAdmin')->name('users.aadmin');
+
+Route::post('/users/radmin/{id}', 'UserController@removeAdmin')->name('users.radmin');
+
+Route::delete('/users/{id}', 'UserController@delete')->name('users.delete');

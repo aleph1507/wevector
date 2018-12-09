@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon;
 
 class Order extends Model
 {
@@ -24,5 +25,15 @@ class Order extends Model
     {
       // return $query->where('completed', false);
       return $query->where('status', '!=', 'Completed');
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+      return Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d/m/Y');
+    }
+
+    public function getUpdatedAtAttribute($date)
+    {
+      return Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d/m/Y');
     }
 }
