@@ -53,7 +53,8 @@ class OrderController extends Controller
       $tmp_thumb_path = $this->find_or_make_path('tmp/thumb');
       $tmp_sm_thumb_path = $this->find_or_make_path('tmp/thumb/sm');
 
-      $new_file_name = time();
+      // $new_file_name = time();
+      $new_file_name = $request->file('file')->getClientOriginalName();
 
       $tmp_img = $this->intervene_image($request->file('file'), $new_file_name, $tmp);
       $tmp_thumb_img =
