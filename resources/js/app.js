@@ -229,13 +229,77 @@ $(document).ready(function() {
 
   let ordersPage = 1;
 
+  let grantAdminBtns = $('.grantAdmin');
+
+  let revokeAdminBtns = $('.revokeAdmin');
+
+  let deleteUserBtns = $('.deleteUser');
+
+  let adminControls = $('.admin-control');
+
+  function deleteUser(user)
+  {
+    axios.delete('/users/' + user.data('userid'))
+      .then(function(response) {
+        user.closest('tr').css('display', 'none');
+        toastr.success('User successfully deleted.');
+      })
+      .catch(function(error) {
+        toastr.error('There\'s been an error deleting the user.');
+        console.log(error);
+      });
+  }
+
+  function adminStatus(user)
+  {
+    let grant = user.hasClass('revokeAdmin') ? true : false;
+    console.log('grant: ', grant);
+    let url = grant ? '/users/radmin/' + user.data('userid') : '/users/aadmin/' + user.data('userid');
+    let classToRemove = grant ? 'revokeAdmin btn-warning' : 'grantAdmin btn-outline-dark';
+    let classToAdd = grant ? 'grantAdmin btn-outline-dark' : 'revokeAdmin btn-warning';
+    let btnHtml = grant ? 'Grant Admin Status' : 'Revoke Admin Status';
+    let toastText = grant ? ' is no longer an admin.' : ' is now an admin.';
+    axios.post(url)
+      .then(function(response) {
+        console.log(response);
+        user.removeClass(classToRemove);
+        user.addClass(classToAdd);
+        user.html(btnHtml);
+        toastr.success(user.data('username') + toastText);
+      })
+      .catch(function(error) {
+        toastr.error('There\'s been an error.');
+      })
+      .then(function() {
+
+      })
+  }
+
+  if(adminControls.length && deleteUserBtns.length > 0)
+  {
+    for(let i = 0; i < deleteUserBtns.length; i++)
+    {
+      $(deleteUserBtns[i]).on('click', function(e) {
+        let confirmDelete =
+          confirm('Delete user with username ' + $(e.target).data('username') + '?');
+        confirmDelete ? deleteUser($(e.target)) : console.log('no delete');
+      });
+    }
+
+    for(let i = 0; i<adminControls.length; i++)
+    {
+      $(adminControls[i]).on('click', function(e){
+        let confirmAdmin = confirm('Are you sure?');
+        confirmAdmin ? adminStatus($(e.target)) : console.log('no admin');
+      });
+    }
+  }
+
   if(exists(active) && exists(completed))
   {
     let paginationLinks = document.getElementById('paginationLinks');
     currentlyActive = 'active';
     getPage(ordersPage, active, paginationLinks, currentlyActive);
-    // console.log('active: ', active);
-    // console.log('completed: ', completed);
     activeTab.addEventListener('click', function(tab) {
       currentlyActive = 'active';
       console.log(currentlyActive);
@@ -278,8 +342,6 @@ $(document).ready(function() {
     modalSpan.onclick = e => closeModal();
   }
 
-
-
   let imgUpload = document.getElementById('file-upload');
 
   if(exists(imgUpload))
@@ -293,6 +355,7 @@ $(document).ready(function() {
    reader.onload = function()
    {
     var output = document.getElementById('output_image');
+    $('#previewImgDiv').removeClass('h-100');
     output.src = reader.result;
    }
    reader.readAsDataURL(event.target.files[0]);

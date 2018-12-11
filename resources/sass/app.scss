@@ -32,6 +32,8 @@
 
 @import 'sidenav';
 
+@import '~toastr/build/toastr.min.css';
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -337,4 +339,23 @@ ul.three-cols a:hover {
   background-color: lightgray;
   color:black;
   text-decoration: underline;
+}
+
+.heightTransformed {
+  text-align:center;
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */
+  transform: rotate(90deg);
+  position:absolute;
+  bottom:50%;
+  left:50%;
+}
+
+.grey-bg-img {
+  background-color:lightgrey;
+  position:relative;
+}
+
+.latoBold {
+  font-family: latoBold;
 }

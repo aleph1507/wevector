@@ -29,17 +29,20 @@
               @if(!$user->isAdmin())
                 <button type="button"
                   data-userid="{{$user->id}}"
-                  class="btn btn-outline-dark btn-sm grantAdmin">Grant Admin Status</button>
+                  data-username="{{$user->username}}"
+                  class="btn btn-outline-dark btn-sm grantAdmin admin-control">Grant Admin Status</button>
               @else
                 <button type="button"
                   data-userid="{{$user->id}}"
-                  class="btn btn-outline-warning btn-sm revokeAdmin">Revoke admin status</button>
+                  data-username="{{$user->username}}"
+                  class="btn btn-warning btn-sm revokeAdmin admin-control">Revoke Admin Status</button>
               @endif
             </td>
             <td>
               <button type="button"
                 data-userid="{{$user->id}}"
-                class="btn btn-outline-danger btn-sm deleteUser">Delete user</button>
+                data-username="{{$user->username}}"
+                class="btn btn-danger btn-sm deleteUser">Delete user</button>
             </td>
           </tr>
         @endforeach

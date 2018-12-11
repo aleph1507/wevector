@@ -91,8 +91,16 @@
           </div>
         </div>
         <div class="col-xs-10 offset-xs-1 col-md-5 offset-md-1">
-          <div class="w-100">
-            <img src="" alt="" id="output_image" class="img-fluid">
+          <div class="w-75 h-50 mt-5 ml-5">
+            <div class="text-center latoBold">
+              - Width -
+            </div>
+            <div class="img-height h-100 grey-bg-img" id="previewImgDiv">
+              <div class="img-height text-center w-100 d-block ml-3 heightTransformed latoBold">
+                - Height -
+              </div>
+              <img src="" alt="" id="output_image" class="img-fluid">
+            </div>
           </div>
         </div>
       </div>

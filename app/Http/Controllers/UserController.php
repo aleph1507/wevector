@@ -22,7 +22,7 @@ class UserController extends Controller
       $u = User::find($id);
       $u->admin = true;
       $u->save();
-      return $u->admin;
+      return (string)$u->admin;
     }
 
     public function removeAdmin($id)
@@ -30,11 +30,11 @@ class UserController extends Controller
       $u = User::find($id);
       $u->admin = false;
       $u->save();
-      return !$u->admin;
+      return (string)!$u->admin;
     }
 
     public function delete($id)
     {
-      return User::find($id)->delete();
+      return (string)User::find($id)->delete();
     }
 }
