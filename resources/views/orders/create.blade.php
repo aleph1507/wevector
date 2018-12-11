@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="container bg-white">
+  <div class="container bg-white pt-5 pl-sm-1 pl-xs-1 pl-md-5">
     <div class="row">
       <h1 class="uppercase">create order</h1>
     </div>
-    <form class="" action="{{route('orders.store')}}" id="form.orders.store"
+    <form class="order-form" action="{{route('orders.store')}}" id="form.orders.store"
       enctype="multipart/form-data" method="post">
       {{csrf_field()}}
       <div class="row">
-        <div class="col-xs-10 offset-xs-1 col-md-5">
-          <input type="text" name="name" value="{{ old('name') }}"
+        <div class="col-xs-10 offset-xs-1 col-md-6">
+          <input type="text" class="w-100" name="name" value="{{ old('name') }}"
             placeholder="1. artwork name *" required>
           <input type="hidden" name="orientation"
             id="orientation" value="portrait" required>

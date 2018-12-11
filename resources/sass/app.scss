@@ -359,3 +359,56 @@ ul.three-cols a:hover {
 .latoBold {
   font-family: latoBold;
 }
+
+// .c-form-input::placeholder {
+//   color: #fff;
+// }
+//
+// .c-form-input::-ms-input-placeholder {
+//   color: #fff;
+// }
+//
+// .c-form-input:-ms-input-placeholder {
+//   color: #fff;
+// }
+//
+// .c-form-textarea::placeholder {
+//   color: #f0386b;
+// }
+//
+// .c-form-textarea::-ms-input-placeholder {
+//   color: #f0386b;
+// }
+//
+// .c-form-textarea:-ms-input-placeholder {
+//   color: #f0386b;
+// }
+
+.order-form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-family: latoBold;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  color: black;
+  text-transform: uppercase;
+}
+.order-form input::-moz-placeholder { /* Firefox 19+ */
+  font-family: latoBold;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  color: black;
+  text-transform: uppercase;
+}
+.order-form input:-ms-input-placeholder { /* IE 10+ */
+  font-family: latoBold;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  color: black;
+  text-transform: uppercase;
+}
+.order-form input:-moz-placeholder { /* Firefox 18- */
+  font-family: latoBold;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  color: black;
+  text-transform: uppercase;
+}
