@@ -2,20 +2,21 @@
 
 @section('content')
   <div class="container bg-white pt-5 pl-sm-1 pl-xs-1 pl-md-5">
-    <div class="row">
-      <h1 class="uppercase">create order</h1>
+    <div class="row d-flex flex-column justify-content-center align-items-center">
+      <h1 class="uppercase large-title">send your order</h1>
+      <h4 class="subtitle mt-5 mb-5">Fill in the form below to share your raster graphics with us.</h4>
     </div>
-    <form class="order-form" action="{{route('orders.store')}}" id="form.orders.store"
+    <form class="order-form mt-5" action="{{route('orders.store')}}" id="form.orders.store"
       enctype="multipart/form-data" method="post">
       {{csrf_field()}}
       <div class="row">
         <div class="col-xs-10 offset-xs-1 col-md-6">
           <input type="text" class="w-100" name="name" value="{{ old('name') }}"
-            placeholder="1. artwork name *" required>
+          placeholder="1. artwork name *" required>
           <input type="hidden" name="orientation"
-            id="orientation" value="portrait" required>
+          id="orientation" value="portrait" required>
+          <h3 class="uppercase mt-5 mb-3 mid-title">2. artwork orientation *</h3>
           <div class="row">
-            <h3 class="uppercase mt-5 mb-3">2. artwork orientation *</h3>
             <div class="col-xs-12 col-md-5">
               <button type="button" name="portrait"
                 id="portrait" data-input="#orientation"
@@ -31,23 +32,27 @@
                 >Landscape</button>
             </div>
           </div>
-          <h3 class="uppercase mt-5 mb-3">3. artwork size *</h3>
+          <h3 class="uppercase mt-5 mb-3 mid-title">3. artwork size *</h3>
           <div class="row">
             <div class="col-xs-10 offset-xs-1 col-md-4">
-              <input type="phone" name="width" id="width" value="{{ old('width') }}" required>
+              <input type="phone" name="width" id="width" class="sm-placeholder"
+              value="{{ old('width') }}" placeholder="Width" required>
             </div>
             <div class="col-xs-10 offset-xs-1 col-md-4 offset-md-1">
-              <input type="phone" name="height" id="height" value="{{ old('height') }}" required>
+              <input type="phone" name="height" id="height" class="sm-placeholder"
+              value="{{ old('height') }}" placeholder="Height" required>
             </div>
             <div class="col-xs-10 offset-xs-1 col-md-1 offset-md-1">
-              <select class="wv_select" name="art_units">
-                <option value="mm" {{ old('wv_select') == 'mm' ? 'selected' : '' }}>mm</option>
-                <option value="cm" {{ old('wv_select') == 'cm' ? 'selected' : '' }}>cm</option>
-                <option value="in" {{ old('wv_select') == 'in' ? 'selected' : '' }}>in</option>
-              </select>
+              <div class="wv_select">
+                <select name="art_units">
+                  <option value="mm" {{ old('wv_select') == 'mm' ? 'selected' : '' }}>mm</option>
+                  <option value="cm" {{ old('wv_select') == 'cm' ? 'selected' : '' }}>cm</option>
+                  <option value="in" {{ old('wv_select') == 'in' ? 'selected' : '' }}>in</option>
+                </select>
+              </div>
             </div>
           </div>
-          <h3 class="uppercase mt-5 mb-3">4. colour pallete</h3>
+          <h3 class="uppercase mt-5 mb-3 mid-title">4. colour pallete</h3>
           <div class="row">
             <input type="hidden" name="color_scheme"
               id="color_scheme" value="">
@@ -66,7 +71,7 @@
                 >cmyk</button>
             </div>
           </div>
-          <h3 class="uppercase mt-5 mb-3">5. attach raster graphics</h3>
+          <h3 class="uppercase mt-5 mb-3 mid-title">5. attach raster graphics</h3>
           <div class="nlp">
             <div class="d-flex flex-row justify-content-between">
               <label class="btn btn-lg btn-outline-dark input-btn">

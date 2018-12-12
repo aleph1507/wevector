@@ -13732,12 +13732,95 @@ __webpack_require__(12);
 //     el: '#app'
 // });
 
+function custom_select() {
+  var x, i, j, selElmnt, a, b, c;
+  /*look for any elements with the class "custom-select":*/
+  x = document.getElementsByClassName("wv_select");
+  for (i = 0; i < x.length; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    /*for each element, create a new DIV that will act as the selected item:*/
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    /*for each element, create a new DIV that will contain the option list:*/
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+    var first = true;
+    for (j = 1; j < selElmnt.length; j++) {
+      /*for each option in the original select element,
+      create a new DIV that will act as an option item:*/
+      if (j == 1 && first) {
+        j--;
+        first = false;
+      }
+      c = document.createElement("DIV");
+      c.innerHTML = selElmnt.options[j].innerHTML;
+      c.addEventListener("click", function (e) {
+        /*when an item is clicked, update the original select box,
+        and the selected item:*/
+        var y, i, k, s, h;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < s.length; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            for (k = 0; k < y.length; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+      });
+      b.appendChild(c);
+    }
+    x[i].appendChild(b);
+    a.addEventListener("click", function (e) {
+      /*when the select box is clicked, close any other select boxes,
+      and open/close the current select box:*/
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+    });
+  }
+  function closeAllSelect(elmnt) {
+    /*a function that will close all select boxes in the document,
+    except the current select box:*/
+    var x,
+        y,
+        i,
+        arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    for (i = 0; i < y.length; i++) {
+      if (elmnt == y[i]) {
+        arrNo.push(i);
+      } else {
+        y[i].classList.remove("select-arrow-active");
+      }
+    }
+    for (i = 0; i < x.length; i++) {
+      if (arrNo.indexOf(i)) {
+        x[i].classList.add("select-hide");
+      }
+    }
+  }
+  /*if the user clicks anywhere outside the select box,
+  then close all select boxes:*/
+  document.addEventListener("click", closeAllSelect);
+}
+
 function exists(el) {
   return el == null || el == undefined ? false : true;
 }
 
 function get_all_btns_of_input(input_id) {
-  return $('[data-input=\'' + input_id + '\']');
+  return $("[data-input='" + input_id + "']");
 }
 
 function toggle_select_btn_class(id, btn) {
@@ -13777,10 +13860,10 @@ function openNav(e) {
 }
 
 function renderOrders(orders, element) {
-  var order_html = '';
+  var order_html = "";
   for (var i = 0; i < orders.data.data.length; i++) {
     var o = orders.data.data[i];
-    order_html += '\n      <a href="/orders/' + o.id + '" class="d-none d-md-block">\n        <div class="d-flex mt-2 mb-2 order-row row">\n          <div class="col-md-1">\n            <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n            alt="image of ' + o.name + '" class="mr-3">\n          </div>\n            <div class="col-md-2 align-middle">\n              <span>' + o.name + '</span>\n            </div>\n            <div class="col-md-2 align-middle">' + o.id + '</div>\n            <div class="col-md-2 align-middle">Rushi</div>\n            <div class="col-md-2 align-middle">' + o.created_at + '</div>\n            <div class="col-md-2 align-middle">' + o.status + '</div>\n            <div class="col-md-1 align-middle">Jok</div>\n        </div>\n      </a>\n      <a href="/orders/' + o.id + '" class="d-block d-md-none">\n        <div class="d-flex mt-2 mb-2 orders-sm row">\n          <div class="col-3">\n          <img src="/images/' + o.id + '/thumb/sm/' + o.file + '"\n          alt="image of ' + o.name + '" class="mr-3">\n          </div>\n          <div class="col-9">\n            <div class="row">\n              <div class="col-6">\n                <span>Name: </span> <span>' + o.name + '</span>\n              </div>\n              <div class="col-6">\n                <span>ID: </span> <span>' + o.id + '</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Comments: </span> <span>Jok</span>\n              </div>\n              <div class="col-6">\n                <span>Status: </span> <span>' + o.status + '</span>\n              </div>\n            </div>\n            <div class="row">\n              <div class="col-6">\n                <span>Type: </span> <span>Rushi</span>\n              </div>\n              <div class="col-6">\n                <span>Sent on: </span> <span>' + o.created_at + '</span>\n              </div>\n            </div>\n          </div>\n        </div>\n      </a>\n    ';
+    order_html += "\n      <a href=\"/orders/" + o.id + "\" class=\"d-none d-md-block\">\n        <div class=\"d-flex mt-2 mb-2 order-row row\">\n          <div class=\"col-md-1\">\n            <img src=\"/images/" + o.id + "/thumb/sm/" + o.file + "\"\n            alt=\"image of " + o.name + "\" class=\"mr-3\">\n          </div>\n            <div class=\"col-md-2 align-middle\">\n              <span>" + o.name + "</span>\n            </div>\n            <div class=\"col-md-2 align-middle\">" + o.id + "</div>\n            <div class=\"col-md-2 align-middle\">Rushi</div>\n            <div class=\"col-md-2 align-middle\">" + o.created_at + "</div>\n            <div class=\"col-md-2 align-middle\">" + o.status + "</div>\n            <div class=\"col-md-1 align-middle\">Jok</div>\n        </div>\n      </a>\n      <a href=\"/orders/" + o.id + "\" class=\"d-block d-md-none\">\n        <div class=\"d-flex mt-2 mb-2 orders-sm row\">\n          <div class=\"col-3\">\n          <img src=\"/images/" + o.id + "/thumb/sm/" + o.file + "\"\n          alt=\"image of " + o.name + "\" class=\"mr-3\">\n          </div>\n          <div class=\"col-9\">\n            <div class=\"row\">\n              <div class=\"col-6\">\n                <span>Name: </span> <span>" + o.name + "</span>\n              </div>\n              <div class=\"col-6\">\n                <span>ID: </span> <span>" + o.id + "</span>\n              </div>\n            </div>\n            <div class=\"row\">\n              <div class=\"col-6\">\n                <span>Comments: </span> <span>Jok</span>\n              </div>\n              <div class=\"col-6\">\n                <span>Status: </span> <span>" + o.status + "</span>\n              </div>\n            </div>\n            <div class=\"row\">\n              <div class=\"col-6\">\n                <span>Type: </span> <span>Rushi</span>\n              </div>\n              <div class=\"col-6\">\n                <span>Sent on: </span> <span>" + o.created_at + "</span>\n              </div>\n            </div>\n          </div>\n        </div>\n      </a>\n    ";
   }
   element.innerHTML = order_html;
   //             <span>Sent on: </span> <span>{{$ao->created_at->format('d/m/Y')}}</span>
@@ -13789,7 +13872,7 @@ function renderOrders(orders, element) {
 function createPaginatorBtn(page, query) {
   var current = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
-  return '<div class="paginator-btn ' + current + '" data-query="' + query + '" data-page="' + page + '">' + page + '</div>';
+  return "<div class=\"paginator-btn " + current + "\" data-query=\"" + query + "\" data-page=\"" + page + "\">" + page + "</div>";
 }
 
 function updatePaginator(paginator, current_page, last_page, query) {
@@ -13902,6 +13985,8 @@ $(document).ready(function () {
   var deleteUserBtns = $('.deleteUser');
 
   var adminControls = $('.admin-control');
+
+  custom_select();
 
   function deleteUser(user) {
     axios.delete('/users/' + user.data('userid')).then(function (response) {
