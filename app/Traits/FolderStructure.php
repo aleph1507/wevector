@@ -27,7 +27,7 @@ trait FolderStructure
 
   public function intervene_image($imgFile, $name, $path, $fitX=null, $fitY=null)
   {
-    $name .= '.' . $imgFile->getClientOriginalExtension();
+    // $name .= '.' . $imgFile->getClientOriginalExtension();
     $location = $path . '/' . $name;
     if($fitX == null || $fitY == null)
       Image::make($imgFile)->save($location);
