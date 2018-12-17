@@ -67,7 +67,9 @@ class OrderController extends Controller
         foreach($request->file('additional_files') as $add_file)
         {
           $tmp_additional_files[] =
-            $this->intervene_image($add_file, $additional_files_count++ . time(), $tmp_add_path);
+            $this->intervene_image($add_file,
+              $additional_files_count++ . time() . '.' . $add_file->getClientOriginalExtension(),
+              $tmp_add_path);
         }
         $additional_files_field = implode(';', $tmp_additional_files);
       }
