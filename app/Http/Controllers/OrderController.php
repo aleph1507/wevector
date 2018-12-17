@@ -9,6 +9,7 @@ use Image;
 use File;
 use Session;
 use Auth;
+use Storage;
 
 class OrderController extends Controller
 {

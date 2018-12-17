@@ -41,3 +41,7 @@ Route::post('/users/aadmin/{id}', 'UserController@addAdmin')->name('users.aadmin
 Route::post('/users/radmin/{id}', 'UserController@removeAdmin')->name('users.radmin');
 
 Route::delete('/users/{id}', 'UserController@delete')->name('users.delete');
+
+Route::get('/guzzle', 'GuzzleController@index');
+
+Route::get('/google', 'GoogleController@index');
