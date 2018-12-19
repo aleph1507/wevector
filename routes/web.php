@@ -45,3 +45,5 @@ Route::delete('/users/{id}', 'UserController@delete')->name('users.delete');
 Route::get('/guzzle', 'GuzzleController@index');
 
 Route::get('/google', 'GoogleController@index');
+
+Route::get('/trello', 'TrelloController@index');

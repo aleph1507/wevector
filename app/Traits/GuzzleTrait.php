@@ -32,12 +32,12 @@ trait GuzzleTrait {
       return $e->getRequest()->getMethod();
     }
 
-    public function getRemoteData($method = 'GET',
-        $url = 'http://httpbin.org/get', $headers = null)
+//    public function getRemoteData($method = 'GET', $url = 'http://httpbin.org/get', $headers = null)
+    public function request($method = 'GET', $url = 'http://httpbin.org/get', $headers = [], $body = '')
     {
-      $client = $headers == null ? new Client() : new Client($headers);
+      $client = count($headers) == 0 ? new Client() : new Client($headers);
       // $client = new Client();
-      $promise = $client->requestAsync($method, $url);
+      $promise = $client->requestAsync($method, $url, $headers, $body);
       $promise->then(
         function (ResponseInterface $res) {
           return $res;
@@ -48,7 +48,11 @@ trait GuzzleTrait {
       );
 
       $response = $promise->wait();
-      echo $this->getResStatusCode($response);
+      return $response;
+
+//      echo $this->getResStatusCode($response);
+//      echo $this->getResBody($response);
+
       // echo $this->getResBody($response);
       // $body = $responsePOST->getBody();
       // dd($body->getContents());

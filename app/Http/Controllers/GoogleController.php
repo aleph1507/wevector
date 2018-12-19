@@ -8,7 +8,44 @@ use Storage;
 class GoogleController extends Controller
 {
 
-    
+    public function index()
+    {
+        $client = new \Google_Client();
+//        $client->setDeveloperKey('AIzaSyBGPnCLnw0TyJxm-NLfvE5etMUR30DmS8E');
+        $client->setApplicationName('WeVector');
+        $cred_file = $this->getOAuthCredentialsFile();
+        putenv("GOOGLE_APPLICATION_CREDENTIALS=$cred_file");
+        $client->useApplicationDefaultCredentials();
+        $value = "aleksandar@thinkerlab.io";
+        $client->setSubject($value);
+//        $client->setAccessType("offline");
+        $client->addScope("https://www.googleapis.com/auth/drive");
+        $driveService = new \Google_Service_Drive($client);
+        $fileMetadata = new \Google_Service_Drive_DriveFile(array('name' => 'google_drive.txt'));
+        $content = Storage::get('google_drive.txt');
+
+        $file = $driveService->files->create($fileMetadata, array(
+            'data' => $content,
+            'mimeType' => 'text/plain',
+            'uploadType' => 'multipart',
+            'fields' => 'id'));
+        $fileId = $file->id;
+//        printf("File ID: %s\n", $file->id);
+//        printf("File ID: %s\n", $fileId);
+        $permissionsArray = ['type' => 'user',
+                            'emailAddress' => $value,
+                            'role' => 'owner'];
+        $newPermission = new \Google_Service_Drive_Permission($permissionsArray);
+        try {
+            return $driveService->permissions->create($fileId, $newPermission);
+        } catch(Exception $e) {
+            print "An error occured: " . $e->getMessage();
+        }
+//        dd($driveService);
+
+        return NULL;
+    }
+
 
     function getOAuthCredentialsFile()
     {
@@ -82,7 +119,7 @@ class GoogleController extends Controller
       return $client;
     }
 
-    public function index()
+    public function index0()
     {
       $client = $this->getClient();
       $service = new \Google_Service_Drive($client);
