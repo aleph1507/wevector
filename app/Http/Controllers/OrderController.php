@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\TrelloTrait;
 use Illuminate\Http\Request;
 use App\Order;
 use App\Traits\FolderStructure;
@@ -14,6 +15,7 @@ use Storage;
 class OrderController extends Controller
 {
     use FolderStructure;
+    use TrelloTrait;
 
     public function __construct()
     {
@@ -28,6 +30,30 @@ class OrderController extends Controller
     public function create()
     {
       return view('orders.create');
+    }
+
+    public function trelloOrder($user, $order)
+    {
+        $name = $user->username . '_' . $order->created_at . '_' . $order->id;
+        $board_res = $this->new_board($name);
+        if($this->getResStatusCode($board_res) != 200)
+            return redirect('/home')->withErrors(['There\'s been a problem placing the order']);
+
+        $board = json_decode($this->getResBody($board_res));
+
+        $lists = json_decode($this->getResBody($this->get_boards_lists($board->id)));
+
+        $new_card_desc = "The customer has named the order $order->name.%0A It's orientation is $order->orientation.%0A";
+
+        if($order->color_scheme != null)
+            $new_card_desc .= "It's color scheme is $order->color_scheme.%0A";
+
+        $new_card_desc .= "Width: $order->width $order->units, Height: $order->height $order->units.%0A";
+
+        $new_card = $this->new_order_card($lists[0]->id, "New order from $user->username",
+            $new_card_desc);
+
+        return $new_card;
     }
 
     public function store(Request $request)
@@ -81,6 +107,8 @@ class OrderController extends Controller
             'file' => $tmp_img,
             'additional_files' => $additional_files_field,
             'user_id' => Auth::user()->id]);
+
+      $trello = $this->trelloOrder(Auth::user(), $no);
 
       $this->mv_tmp_image($no->file, $no->id);
 

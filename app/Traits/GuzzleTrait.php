@@ -36,8 +36,9 @@ trait GuzzleTrait {
     public function request($method = 'GET', $url = 'http://httpbin.org/get', $headers = [], $body = '')
     {
       $client = count($headers) == 0 ? new Client() : new Client($headers);
-      // $client = new Client();
       $promise = $client->requestAsync($method, $url, $headers, $body);
+//      dd($promise);
+//        $promise = $client->requestAsync($method, $url);
       $promise->then(
         function (ResponseInterface $res) {
           return $res;
@@ -48,6 +49,7 @@ trait GuzzleTrait {
       );
 
       $response = $promise->wait();
+//      dd($this->getResBody($response));
       return $response;
 
 //      echo $this->getResStatusCode($response);

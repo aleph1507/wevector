@@ -46,4 +46,4 @@ Route::get('/guzzle', 'GuzzleController@index');
 
 Route::get('/google', 'GoogleController@index');
 
-Route::get('/trello', 'TrelloController@index');
+//Route::get('/trello', 'TrelloController@index');
