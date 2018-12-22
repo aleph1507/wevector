@@ -31,16 +31,18 @@ class GoogleController extends Controller
             'fields' => 'id'));
         $fileId = $file->id;
 //        printf("File ID: %s\n", $file->id);
-//        printf("File ID: %s\n", $fileId);
-        $permissionsArray = ['type' => 'user',
-                            'emailAddress' => $value,
-                            'role' => 'owner'];
-        $newPermission = new \Google_Service_Drive_Permission($permissionsArray);
-        try {
-            return $driveService->permissions->create($fileId, $newPermission);
-        } catch(Exception $e) {
-            print "An error occured: " . $e->getMessage();
-        }
+        printf("File ID: %s\n", $fileId);
+
+//        $permissionsArray = ['type' => 'user',
+//                            'emailAddress' => $value,
+//                            'role' => 'owner'];
+//
+//        $newPermission = new \Google_Service_Drive_Permission($permissionsArray);
+//        try {
+//            return $driveService->permissions->create($fileId, $newPermission);
+//        } catch(Exception $e) {
+//            print "An error occured: " . $e->getMessage();
+//        }
 //        dd($driveService);
 
         return NULL;
