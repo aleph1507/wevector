@@ -13948,9 +13948,9 @@ function setPaginationEvents(element, paginator, query, paginatorBtns) {
 
 $(document).ready(function () {
 
-  document.getElementById('openNavSpan').addEventListener("click", openNav);
+  if (document.getElementById('openNavSpan') != null) document.getElementById('openNavSpan').addEventListener("click", openNav);
 
-  document.getElementById('closeNavBtn').addEventListener("click", closeNav);
+  if (document.getElementById('closeNavBtn') != null) document.getElementById('closeNavBtn').addEventListener("click", closeNav);
 
   $(".select-btn").on("click", function (e) {
     set_select_btn_value($(this));

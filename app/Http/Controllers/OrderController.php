@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\TrelloTrait;
+use App\Traits\GoogleTrait;
 use Illuminate\Http\Request;
 use App\Order;
 use App\Traits\FolderStructure;
@@ -16,6 +17,7 @@ class OrderController extends Controller
 {
     use FolderStructure;
     use TrelloTrait;
+    use GoogleTrait;
 
     public function __construct()
     {
@@ -54,6 +56,36 @@ class OrderController extends Controller
             $new_card_desc);
 
         return $new_card;
+    }
+
+    public function googleOrder($order)
+    {
+        $driveService = $this->get_drive_service();
+        $project_folder = array($this->new_folder($driveService, $order->name));
+        $projectImg = $this->drive_image($order->file, "images/$order->id/", $driveService, $project_folder);
+        if($order->additional_files != null)
+        {
+            $additional_folder = array($this->new_folder($driveService, 'Additional_files', $project_folder));
+            $add_files = explode(';', $order->additional_files);
+            for($i = 0; $i<count($add_files); $i++)
+            {
+                $this->drive_image($add_files[$i], "images/$order->id/additional_files/",
+                    $driveService, $additional_folder);
+            }
+        }
+
+//        return $project_folder;
+        return $driveService->files->get($project_folder, array("fields" => "webViewLink"));
+//        $table->string('name');
+//        $table->enum('orientation', ['portrait', 'landscape']);
+//        $table->enum('color_scheme', ['rgb', 'cmyk', null])->nullable();
+//        $table->string('file')->nullable();
+//        $table->text('additional_files')->nullable();
+//        $table->integer('user_id');
+//        $table->float('width');
+//        $table->float('height');
+//        $table->enum('units', ['mm', 'cm', 'in']);
+//        $table->enum('status', ['Recieved', 'In Process', 'On Hold', 'Completed'])->default('Recieved');
     }
 
     public function store(Request $request)
@@ -108,12 +140,15 @@ class OrderController extends Controller
             'additional_files' => $additional_files_field,
             'user_id' => Auth::user()->id]);
 
-      $trello = $this->trelloOrder(Auth::user(), $no);
+//      $trello = $this->trelloOrder(Auth::user(), $no);
 
       $this->mv_tmp_image($no->file, $no->id);
 
       if($this->mv_additional_images($no->additional_files, $no->id) != 0)
         return redirect('/home')->withErrors(['There\'s been a problem placing the order']);
+
+      $drive = $this->googleOrder($no);
+      dd($drive["webViewLink"]);
 
       Session::flash('success', 'Successfuly ordered');
       return redirect('/home');

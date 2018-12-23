@@ -8,42 +8,39 @@ use Storage;
 class GoogleController extends Controller
 {
 
-    public function index()
+    public function drive_image($name, $path, $service)
+    {
+        $fileMetadata = new \Google_Service_Drive_DriveFile(array('name' => $name));
+        $content = file_get_contents(public_path($path . $name));
+        $file = $service->files->create($fileMetadata, array(
+            'data' => $content,
+            'mimeType' => 'image/*',
+            'uploadType' => 'multipart',
+            'fields' => 'id'
+        ));
+
+        return $file;
+    }
+
+    public function get_drive_service()
     {
         $client = new \Google_Client();
-//        $client->setDeveloperKey('AIzaSyBGPnCLnw0TyJxm-NLfvE5etMUR30DmS8E');
         $client->setApplicationName('WeVector');
         $cred_file = $this->getOAuthCredentialsFile();
         putenv("GOOGLE_APPLICATION_CREDENTIALS=$cred_file");
         $client->useApplicationDefaultCredentials();
         $value = "aleksandar@thinkerlab.io";
         $client->setSubject($value);
-//        $client->setAccessType("offline");
         $client->addScope("https://www.googleapis.com/auth/drive");
-        $driveService = new \Google_Service_Drive($client);
-        $fileMetadata = new \Google_Service_Drive_DriveFile(array('name' => 'google_drive.txt'));
-        $content = Storage::get('google_drive.txt');
+        return new \Google_Service_Drive($client);
+    }
 
-        $file = $driveService->files->create($fileMetadata, array(
-            'data' => $content,
-            'mimeType' => 'text/plain',
-            'uploadType' => 'multipart',
-            'fields' => 'id'));
-        $fileId = $file->id;
-//        printf("File ID: %s\n", $file->id);
-        printf("File ID: %s\n", $fileId);
+    public function index()
+    {
+        $driveService = $this->get_drive_service();
+        $file = $this->drive_image('grujo_kosa.jpg', 'images/1/', $driveService);
 
-//        $permissionsArray = ['type' => 'user',
-//                            'emailAddress' => $value,
-//                            'role' => 'owner'];
-//
-//        $newPermission = new \Google_Service_Drive_Permission($permissionsArray);
-//        try {
-//            return $driveService->permissions->create($fileId, $newPermission);
-//        } catch(Exception $e) {
-//            print "An error occured: " . $e->getMessage();
-//        }
-//        dd($driveService);
+        printf("File ID: %s\n", $file->id);
 
         return NULL;
     }
@@ -51,23 +48,9 @@ class GoogleController extends Controller
 
     function getOAuthCredentialsFile()
     {
-      // oauth2 creds
-
-      // $oauth_creds = __DIR__ . '/../oauth-credentials.json';
       return Storage::exists('oauth-credentials.json') ?
         Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix()
           . 'oauth-credentials.json' : false;
-      // return Storage::exists('oauth-credentials.json') ?
-      //   Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . Storage::url('oauth-credentials.json')
-      //   : false;
-      // if(!Storage::exists('oauth-credentials.json'))
-      //   return false;
-      // return Storage::get('oauth-credentials.json');
-      // dd($oauth_creds);
-      // if (file_exists($oauth_creds)) {
-      //   return $oauth_creds;
-      // }
-      // return false;
     }
 
     function getTokenFile()
