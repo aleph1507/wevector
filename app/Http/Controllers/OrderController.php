@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewOrder;
 use App\Traits\TrelloTrait;
 use App\Traits\GoogleTrait;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use File;
 use Session;
 use Auth;
 use Storage;
+use Mail;
 
 class OrderController extends Controller
 {
@@ -34,7 +36,7 @@ class OrderController extends Controller
       return view('orders.create');
     }
 
-    public function trelloOrder($user, $order)
+    public function trelloOrder($user, $order, $driveLink)
     {
         $name = $user->username . '_' . $order->created_at . '_' . $order->id;
         $board_res = $this->new_board($name);
@@ -45,7 +47,7 @@ class OrderController extends Controller
 
         $lists = json_decode($this->getResBody($this->get_boards_lists($board->id)));
 
-        $new_card_desc = "The customer has named the order $order->name.%0A It's orientation is $order->orientation.%0A";
+        $new_card_desc = "The customer has named the order $order->name.%0A It's orientation is $order->orientation.%0ALink to Google Drive: $driveLink";
 
         if($order->color_scheme != null)
             $new_card_desc .= "It's color scheme is $order->color_scheme.%0A";
@@ -55,7 +57,7 @@ class OrderController extends Controller
         $new_card = $this->new_order_card($lists[0]->id, "New order from $user->username",
             $new_card_desc);
 
-        return $new_card;
+        return $board;
     }
 
     public function googleOrder($order)
@@ -74,18 +76,8 @@ class OrderController extends Controller
             }
         }
 
-//        return $project_folder;
-        return $driveService->files->get($project_folder, array("fields" => "webViewLink"));
-//        $table->string('name');
-//        $table->enum('orientation', ['portrait', 'landscape']);
-//        $table->enum('color_scheme', ['rgb', 'cmyk', null])->nullable();
-//        $table->string('file')->nullable();
-//        $table->text('additional_files')->nullable();
-//        $table->integer('user_id');
-//        $table->float('width');
-//        $table->float('height');
-//        $table->enum('units', ['mm', 'cm', 'in']);
-//        $table->enum('status', ['Recieved', 'In Process', 'On Hold', 'Completed'])->default('Recieved');
+        return ['project_folder' => $driveService->files->get($project_folder, array("fields" => "webViewLink")),
+                'primary_image' => $driveService->files->get($projectImg->id, array('fields' => 'webViewLink'))];
     }
 
     public function store(Request $request)
@@ -140,15 +132,21 @@ class OrderController extends Controller
             'additional_files' => $additional_files_field,
             'user_id' => Auth::user()->id]);
 
-//      $trello = $this->trelloOrder(Auth::user(), $no);
-
       $this->mv_tmp_image($no->file, $no->id);
 
       if($this->mv_additional_images($no->additional_files, $no->id) != 0)
         return redirect('/home')->withErrors(['There\'s been a problem placing the order']);
 
       $drive = $this->googleOrder($no);
-      dd($drive["webViewLink"]);
+
+//      dd($drive['project_folder']["webViewLink"]);
+
+      $trello = $this->trelloOrder(Auth::user(), $no, $drive['project_folder']['webViewLink']);
+
+//      dd($trello->shortUrl);
+
+      Mail::to('xrristo@gmail.com')->send(new
+        NewOrder($drive['primary_image']['webViewLink'], $drive['project_folder']['webViewLink'], $trello->shortUrl));
 
       Session::flash('success', 'Successfuly ordered');
       return redirect('/home');
