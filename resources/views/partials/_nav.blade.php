@@ -1,4 +1,4 @@
-<nav class="bg-white">
+<nav class="{{Request::is('login') ? 'transparent-nav' : 'bg-white'}}">
   <div class="container pt-3 pb-3">
     <a class="navbar-brand" href="{{ url('/') }}">
         {{ config('app.name', 'Laravel') }}
@@ -6,7 +6,7 @@
 
 
       @guest
-        <div class="additional-btns ml-auto">
+        <div class="{{Request::is('login') ? 'transparent-nav' : 'additional-btns'}} ml-auto">
           <a class="nav-link" style="display:inline-block;" href="{{ route('login') }}">{{ __('Login') }}</a>
           <a class="nav-link" style="display:inline-block;" href="{{ route('register') }}">{{ __('Register') }}</a>
         </div>

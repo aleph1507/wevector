@@ -1,5 +1,5 @@
 @include('partials._head')
-<body>
+<body class="{{Request::is('login') ? 'group210' : ''}}">
     <div id="app">
         @include('partials._modal')
         @include('partials._nav')

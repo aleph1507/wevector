@@ -34,6 +34,54 @@
 
 @import '~toastr/build/toastr.min.css';
 
+.login-card {
+    display:flex;
+    flex-direction:column;
+}
+
+.login-card h1 {
+    font-family:latoBlack;
+    font-size: 48px;
+    line-height: 52px;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
+
+.login-card p {
+    font-family:latoRegular;
+    font-size:16px;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
+
+.lg-btn-padding {
+    padding: 0.8em 7em;
+}
+
+.login-card a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.group210 {
+    background-image: url("/img/group-210.png");
+}
+.grey-thick-border {
+    border: 2em solid rgba(216,216,216,0.50);
+    -moz-background-clip: padding;     /* Firefox 3.6 */
+    -webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+    background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+}
+
+.transparent-nav {
+    background-color: rgba(255,255,255,0);
+    color: rgba(255,255,255,0);
+}
+
+.transparent-nav > a.nav-link {
+    display: none !important;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);

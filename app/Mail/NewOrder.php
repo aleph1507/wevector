@@ -35,6 +35,6 @@ class NewOrder extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.new_order');
+        return $this->view('mail.new_order')->to('xrristo@gmail.com');
     }
 }
