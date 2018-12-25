@@ -12,7 +12,7 @@
                     <p class="mt-1 mb-5">
                         Please login with the provided user name and password to share your raster graphics with us.
                     </p>
-                    <form method="POST" action="{{ route('login') }}" class="order-form">
+                    <form method="POST" action="{{ route('login') }}" class="login-form">
                        @csrf
 
                         <div class="form-group row">
@@ -20,7 +20,7 @@
 
                             <div class="col-md-12">
                                 <input id="username" type="text"
-                                       class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
+                                       class="{{ $errors->has('username') ? ' is-invalid' : '' }}"
                                        name="username" value="{{ old('username') }}" required
                                        placeholder="User name *" autofocus>
 
@@ -37,7 +37,7 @@
 
                             <div class="col-md-12">
                                 <input id="password" type="password"
-                                       class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                       class="{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                        name="password" placeholder="Password *" required>
 
                                 @if ($errors->has('password'))
