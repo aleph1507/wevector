@@ -39,6 +39,8 @@ class OrderController extends Controller
 
     public function trelloOrder($user, $order, $driveLink)
     {
+        $wv_board_id = $this->check_board();
+
         $name = $user->username . '_' . $order->created_at . '_' . $order->id;
         $board_res = $this->new_board($name);
         if($this->getResStatusCode($board_res) != 200)
@@ -48,6 +50,8 @@ class OrderController extends Controller
 
         $lists = json_decode($this->getResBody($this->get_boards_lists($board->id)));
 
+        $wv_board_lists = json_decode($this->getResBody($this->get_boards_lists($wv_board_id)));
+
         $new_card_desc = "The customer has named the order $order->name.%0AIt's orientation is $order->orientation.%0ALink to Google Drive: $driveLink%0A";
 
         if($order->color_scheme != null)
@@ -55,8 +59,9 @@ class OrderController extends Controller
 
         $new_card_desc .= "Width: $order->width $order->units, Height: $order->height $order->units.%0A";
 
-        $new_card = $this->new_order_card($lists[0]->id, "New order from $user->username",
-            $new_card_desc);
+        $this->new_order_card($lists[0]->id, "New order from $user->username", $new_card_desc);
+
+        $this->new_order_card($wv_board_lists[0]->id, "New order from $user->username", $new_card_desc);
 
         return $board;
     }

@@ -40,6 +40,28 @@ trait TrelloTrait
         return $this->request('POST', 'https://api.trello.com/1/boards?' . $query_string, ['headers' => $headers]);
     }
 
+    public function check_board($name = 'WeVectorBoard')
+    {
+        $bid = false;
+        $boards = json_decode($this->getResBody($this->get_boards()));
+        for($i = 0; $i < count($boards); $i++)
+            if($boards[$i]->name == $name)
+                $bid = $boards[$i]->id;
+
+        if(!$bid)
+            $bid = json_decode($this->getResBody($this->new_board($name)))->id;
+
+        return $bid;
+    }
+
+    public function get_boards()
+    {
+        $url = "https://api.trello.com/1/members/me/boards?";
+        $query_string = "key=$this->api_key&token=$this->token";
+
+        return $this->request('GET', $url . $query_string);
+    }
+
     public function get_boards_lists($bid)
     {
         $url = "https://api.trello.com/1/boards/$bid/lists?";
