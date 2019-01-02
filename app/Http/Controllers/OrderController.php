@@ -14,6 +14,7 @@ use Session;
 use Auth;
 use Storage;
 use Mail;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -64,7 +65,8 @@ class OrderController extends Controller
     {
         $driveService = $this->get_drive_service();
         $user_folder = array($this->folder_exist($driveService, Auth::user()->username));
-        $project_folder = array($this->new_folder($driveService, $order->name, $user_folder));
+        $folder_name = Carbon::now()->toDateString() . '_' . $order->name;
+        $project_folder = array($this->new_folder($driveService, $folder_name, $user_folder));
         $projectImg = $this->drive_image($order->file, "images/$order->id/", $driveService, $project_folder);
         if($order->additional_files != null)
         {
