@@ -47,7 +47,7 @@ class OrderController extends Controller
 
         $lists = json_decode($this->getResBody($this->get_boards_lists($board->id)));
 
-        $new_card_desc = "The customer has named the order $order->name.%0A It's orientation is $order->orientation.%0ALink to Google Drive: $driveLink";
+        $new_card_desc = "The customer has named the order $order->name.%0AIt's orientation is $order->orientation.%0ALink to Google Drive: $driveLink%0A";
 
         if($order->color_scheme != null)
             $new_card_desc .= "It's color scheme is $order->color_scheme.%0A";
@@ -63,7 +63,8 @@ class OrderController extends Controller
     public function googleOrder($order)
     {
         $driveService = $this->get_drive_service();
-        $project_folder = array($this->new_folder($driveService, $order->name));
+        $user_folder = array($this->folder_exist($driveService, Auth::user()->username));
+        $project_folder = array($this->new_folder($driveService, $order->name, $user_folder));
         $projectImg = $this->drive_image($order->file, "images/$order->id/", $driveService, $project_folder);
         if($order->additional_files != null)
         {

@@ -18,11 +18,36 @@ trait GoogleTrait
         if($folder != null)
             $metaArray['parents'] = $folder;
 
+
         $fileMetadata = new \Google_Service_Drive_DriveFile($metaArray);
         $file = $driveService->files->create($fileMetadata, array(
             'fields' => 'id'));
 
         return $file->id;
+    }
+
+    public function folder_exist($driveService, $name)
+    {
+        $pageToken = null;
+        $response = null;
+        $file_id = false;
+        do {
+            $response = $driveService->files->listFiles(array(
+                'q' => "mimeType='application/vnd.google-apps.folder' and trashed=false",
+                'spaces' => 'drive',
+                'pageToken' => $pageToken,
+                'fields' => 'nextPageToken, files(id, name)',
+            ));
+            foreach ($response->files as $file) {
+                if($file->name == $name) {
+                    $file_id = $file->id;
+                }
+            }
+
+            $pageToken = $response->pageToken;
+        } while ($pageToken != null);
+
+        return $file_id ? $file_id : $this->new_folder($driveService, $name);
     }
 
     public function drive_image($name, $path, $service, $folder)

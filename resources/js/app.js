@@ -148,10 +148,14 @@ function select_btn_input(id) {
     if(b.hasClass('selected')) set_select_btn_value(b);
 }
 
+var navBtnHTML = '';
+
 function openNav(e) {
     if(document.getElementById("mySidenav").style.width != "350px"){
+      document.querySelector('.additional-btns').style.marginRight = '350px';
       document.getElementById("mySidenav").style.width = "350px";
-      document.getElementById('openNavSpan').innerHTML = '&times;';
+      // navBtnHTML = document.getElementById('openNavSpan').innerHTML;
+      // document.getElementById('openNavSpan').innerHTML = '&times;';
     }
     else{
       closeNav(e);
@@ -266,7 +270,9 @@ function getPage(page, element, paginator, query)
 /* Set the width of the side navigation to 0 */
 function closeNav(e) {
     document.getElementById("mySidenav").style.width = "0";
-    document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars fa-lg"></i>';
+    // document.getElementById('openNavSpan').innerHTML = navBtnHTML;
+    document.querySelector('.additional-btns').style.marginRight = '0px';
+    // document.getElementById('openNavSpan').innerHTML = '<i class="fas fa-bars fa-lg"></i>';
 }
 
 function setPaginationEvents(element, paginator, query, paginatorBtns)
@@ -278,6 +284,20 @@ function setPaginationEvents(element, paginator, query, paginatorBtns)
   }
 }
 
+function sendOrder(event) {
+    let loadingHTML = '<div class="wrap pb-5">\n' +
+        '  <div class="loading">\n' +
+        '    <div class="bounceball"></div>\n' +
+        '    <div class="text">Processing your order...</div>\n' +
+        '  </div>\n' +
+        '</div>';
+
+    event.target.parentNode.innerHTML = loadingHTML;
+
+    document.getElementById('form.orders.store').submit();
+    // document.querySelector('#form.orders.store').submit();
+}
+
 $(document).ready(function() {
 
   if(document.getElementById('openNavSpan') != null)
@@ -285,6 +305,10 @@ $(document).ready(function() {
 
   if(document.getElementById('closeNavBtn') != null)
     document.getElementById('closeNavBtn').addEventListener("click", closeNav);
+
+  if(document.getElementById('btn-send-order')) {
+      document.getElementById('btn-send-order').addEventListener('click', sendOrder);
+  }
 
   $(".select-btn").on("click", function(e) {
     set_select_btn_value($(this));

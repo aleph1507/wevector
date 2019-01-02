@@ -111,10 +111,10 @@
       </div>
       <div class="row mt-5">
         <div class="col-12 mt-5">
-          <div class="d-flex justify-content-center align-items-center">
+          <div class="d-flex justify-content-center align-items-center" >
             <input type="submit"
               class="pink-button-lg text-uppercase"
-              name="submit" value="send order">
+              name="submit" value="send order" id="btn-send-order">
           </div>
         </div>
       </div>
