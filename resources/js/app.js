@@ -244,21 +244,37 @@ function updatePaginator(paginator, current_page, last_page, query)
     paginator.innerHTML += i == current_page ? createPaginatorBtn(i, query, 'current') : createPaginatorBtn(i, query);
 }
 
-function getPage(page, element, paginator, query)
+function getPage(page, element, paginator, query, queryString = '', etarget = null, newHTML = null, sortBy = '', direction = '')
 {
   let url = '';
-  if(query == 'active') url = '/orders/active?page=' + page;
-  if(query == 'completed') url = '/orders/completed?page=' + page;
+  queryString = document.getElementById('search-orders').value;
+  if(direction !== '')
+      direction = '&direction=' + (direction == 'asc' ? 'asc' : 'desc');
+  if(etarget != null && newHTML != null && sortBy != '' && direction != '') {
+     sortBy = '&sortBy=' + sortBy;
+  }
+  if(queryString != '') queryString = '&queryString=' + queryString + sortBy + direction;
+  if(query == 'active') url = '/orders/active?page=' + page + queryString + sortBy + direction;
+  if(query == 'completed') url = '/orders/completed?page=' + page + queryString + sortBy + direction;
+
   let success = null;
   axios.get(url)
     .then(function(response) {
-      // console.log(response);
       updatePaginator(paginator, response.data.current_page, response.data.last_page, query);
       renderOrders(response, element);
       setPaginationEvents(element, paginator, query, document.querySelectorAll('.paginator-btn'));
+      console.log('etarget: ', etarget);
+      if(sortBy != ''){
+          console.log('sortBy: ', sortBy);
+          etarget.innerHTML = newHTML;
+          console.log('newHTML: ', newHTML);
+          console.log('etarget.innerHTML: ', etarget.innerHTML);
+      }
+
       success = 0;
     })
     .catch(function(error) {
+      console.log(error.message);
       success = 1;
     });
     // .then(function() {
@@ -344,6 +360,10 @@ $(document).ready(function() {
 
   let adminControls = $('.admin-control');
 
+  let searchOrders = document.getElementById('search-orders');
+
+  let sortOrders = document.getElementsByClassName('sort-orders');
+
   custom_select();
 
   function deleteUser(user)
@@ -417,8 +437,27 @@ $(document).ready(function() {
     completedTab.addEventListener('click', function(tab) {
       currentlyActive = 'completed';
       console.log(currentlyActive);
-      getPage(ordersPage, active, paginationLinks, currentlyActive);
+      getPage(ordersPage, completed, paginationLinks, currentlyActive);
     });
+    searchOrders.addEventListener('keyup', function(event) {
+        let qString = event.target.value;
+        let tab = currentlyActive == 'completed' ? completed : active;
+        getPage(ordersPage, tab, paginationLinks, currentlyActive, qString);
+    });
+    for(let i = 0; i<sortOrders.length; i++) {
+        sortOrders[i].addEventListener('click', function(event) {
+            console.log('so event');
+            let caretUp = '<i class="fas fa-caret-up"></i>';
+            let caretDown = '<i class="fas fa-caret-down"></i>';
+            let innerHTML = sortOrders[i].innerHTML;
+            let sortBy = innerHTML.split(' ')[0];
+            let direction = innerHTML.indexOf(caretUp) !== -1 ? 'asc' : 'desc';
+            let newHTML = sortBy + ' ' + (direction == 'asc' ? caretDown : caretUp);
+            let tab = currentlyActive == 'completed' ? completed : active;
+            let etarget = (event.target.tagName.toUpperCase() === 'I' ? event.target.parentNode : event.target)
+            getPage(ordersPage, tab, paginationLinks, currentlyActive, '', etarget, newHTML, sortBy, direction);
+        });
+    }
   }
 
   if(exists(modal) && exists(modalTrigger))

@@ -2,15 +2,25 @@
 
 @section('content')
   <div class="container pt-5">
-    <div class="row d-flex justify-content-between align-items-between">
+    <div class="row d-flex justify-content-between align-items-between pl-xs-5 pl-sm-5">
       <h1 class="text-uppercase light-height-1 pt-3">requests</h1>
-      <a href="{{route('orders.create')}}">
-        <div class="new_illustraion_div" id="new_illustraion_div">
-          <button type="button" name="new_illustration" id="new_illustration"
-          class="btn btn-pink btn-round-1 text-white text-center">+</button>
-          <span class="menu-span-1">Request new illustration</span>
-        </div>
-      </a>
+      <div class="row">
+          <div class="col-xs-10 col-sm-10 col-md-7">
+              <a href="{{route('orders.create')}}">
+                  <div class="new_illustraion_div" id="new_illustraion_div">
+                      <button type="button" name="new_illustration" id="new_illustration"
+                              class="btn btn-pink btn-round-1 text-white text-center">+</button>
+                      <span class="menu-span-1">Request new illustration</span>
+                  </div>
+              </a>
+          </div>
+          <div class="col-4">
+              <div class="inputWithIcon">
+                  <input type="text" id="search-orders" placeholder="Search">
+                  <i class="fas fa-search"></i>
+              </div>
+          </div>
+      </div>
     </div>
 
     <div class="list-orders mt-5">
@@ -18,23 +28,23 @@
         <li class="nav-item">
           <a data-toggle="tab" class="nav-link active text-center" href="#active"
             role="tab" aria-controls="active"
-            id="activeTab" aria-selected="true">Active</a>
+            id="activeTab" aria-selected="true">Active Orders</a>
         </li>
         <li class="nav-item">
           <a data-toggle="tab" class="nav-link text-center" href="#completed"
             role="tab" aria-controls="profile"
-            id="completedTab" aria-selected="false">Completed</a>
+            id="completedTab" aria-selected="false">Completed Orders</a>
         </li>
       </ul>
       <div class="d-none d-md-block">
         <div class="d-flex justify-content-start align-items-start mt-4 mb-3 t-header row pl-xs-5">
           <div class="col-1 d-none d-sm-block">&nbsp;</div>
-          <div class="col-2">Name</div>
-          <div class="col-2">ID</div>
-          <div class="col-2">Type</div>
-          <div class="col-2">Sent on</div>
-          <div class="col-2">Status</div>
-          <div class="col-1">Comment</div>
+          <div class="col-2 sort-orders" id="so-name">Name <i class="fas fa-caret-down"></i></div>
+          <div class="col-2 sort-orders" id="so-id">ID <i class="fas fa-caret-down"></i></div>
+          <div class="col-2 sort-orders" id="so-type">Type <i class="fas fa-caret-down"></i></div>
+          <div class="col-2 sort-orders" id="so-sentOn">Sent on <i class="fas fa-caret-down"></i></div>
+          <div class="col-2 sort-orders" id="so-status">Status <i class="fas fa-caret-down"></i></div>
+          <div class="col-1 sort-orders" id="so-comment">Comment <i class="fas fa-caret-down"></i></div>
         </div>
       </div>
       <div class="tab-content">

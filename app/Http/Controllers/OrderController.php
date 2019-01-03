@@ -165,13 +165,140 @@ class OrderController extends Controller
       return view('orders.view')->with('order', Auth::user()->orders->find($id));
     }
 
-    public function activeOrders()
+    public function activeOrders(Request $request)
     {
-      return json_encode(Order::active()->latest()->paginate(2));
+      $data = null;
+      $sortBy = $request->query('sortBy', '');
+      $direction = $request->query('direction', '');
+      $queryString = $request->query('queryString', '');
+//        return json_encode(['sortBy' => $sortBy, 'direction' => $direction, 'queryString' => $queryString]);
+      if($sortBy != '' && $direction != '') {
+          $direction = ($direction == 'asc' ? 'asc' : 'desc');
+          switch($sortBy) {
+              case 'Name':
+                  $sortBy = 'name';
+                  break;
+              case 'ID':
+                  $sortBy = 'id';
+                  break;
+              case 'Type':
+                  $sortBy = 'type';
+                  break;
+              case 'Sent':
+                  $sortBy = 'created_at';
+                  break;
+              case 'Status':
+                  $sortBy = 'status';
+                  break;
+              case 'Comment':
+                  $sortBy = 'comments';
+                  break;
+              default:
+                  $sortBy = '';
+          }
+      }
+//      return json_encode(['sortBy' => $sortBy, 'direction' => $direction]);
+
+      if($queryString != '') {
+          if($sortBy == '') {
+//              return json_encode(['sortBy' => 'empty', 'queryString' => $queryString]);
+              $data = json_encode(Order::active()->where('name', 'like', '%' . $queryString . '%')
+                  ->orWhere('file', 'like', '%' . $queryString . '%')
+                  ->orWhere('created_at', 'like', '%' . $queryString . '%')->paginate(2));
+          } else {
+              $data = json_encode(Order::active()->where('name', 'like', '%' . $queryString . '%')
+                  ->orWhere('file', 'like', '%' . $queryString . '%')
+                  ->orWhere('created_at', 'like', '%' . $queryString . '%')
+                  ->orderBy($sortBy, $direction)
+                  ->paginate(2));
+          }
+      } else {
+          if($sortBy == '') {
+              $data = json_encode(Order::active()->latest()->paginate(2));
+          } else {
+              $data = json_encode(Order::active()->orderBy($sortBy, $direction)->paginate(2));
+          }
+
+      }
+
+      return $data;
+//      return json_encode(Order::active()->latest()->paginate(2));
     }
 
-    public function completedOrders()
+    public function completedOrders(Request $request)
     {
-      return json_encode(Order::completed()->latest()->paginate(2));
+        $data = null;
+        $sortBy = $request->query('sortBy', '');
+        $direction = $request->query('direction', '');
+        $queryString = $request->query('queryString', '');
+//        return json_encode(['sortBy' => $sortBy, 'direction' => $direction, 'queryString' => $queryString]);
+        if($sortBy != '' && $direction != '') {
+            $direction = ($direction == 'asc' ? 'asc' : 'desc');
+            switch($sortBy) {
+                case 'Name':
+                    $sortBy = 'name';
+                    break;
+                case 'ID':
+                    $sortBy = 'id';
+                    break;
+                case 'Type':
+                    $sortBy = 'type';
+                    break;
+                case 'Sent':
+                    $sortBy = 'created_at';
+                    break;
+                case 'Status':
+                    $sortBy = 'status';
+                    break;
+                case 'Comment':
+                    $sortBy = 'comments';
+                    break;
+                default:
+                    $sortBy = '';
+            }
+        }
+        if($queryString != '') {
+            if($sortBy == '') {
+                $data = json_encode(Order::completed()->where('name', 'like', '%' . $queryString . '%')
+                    ->orWhere('file', 'like', '%' . $queryString . '%')
+                    ->orWhere('created_at', 'like', '%' . $queryString . '%')->paginate(2));
+            } else {
+                $data = json_encode(Order::completed()->where('name', 'like', '%' . $queryString . '%')
+                    ->orWhere('file', 'like', '%' . $queryString . '%')
+                    ->orWhere('created_at', 'like', '%' . $queryString . '%')
+                    ->orderBy($sortBy, $direction)
+                    ->paginate(2));
+            }
+        } else {
+            if($sortBy == '') {
+                $data = json_encode(Order::completed()->latest()->paginate(2));
+            } else {
+                $data = json_encode(Order::completed()->orderBy($sortBy, $direction)->paginate(2));
+            }
+
+        }
+      return $data;
+    }
+
+    public function changeStatus(Request $request) {
+        // $table->enum('status', ['Recieved', 'In Process', 'On Hold', 'Completed'])->default('Recieved');
+        if($request->status && $request->id) {
+            switch($request->status) {
+                case 'Received':
+                case 'In Process':
+                case 'On Hold':
+                case 'Completed':
+                    break;
+                default:
+//                    Session::flash('Status is not recognised.');
+                    return redirect()->back()->withErrors('Status is not recognised.');
+            }
+            $o = Order::find($request->id);
+            $o->status = $request->status;
+            $o->save();
+            Session::flash('success', 'Status changed.');
+            return back();
+        }
+
     }
 }

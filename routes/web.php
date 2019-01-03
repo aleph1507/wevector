@@ -46,4 +46,6 @@ Route::get('/guzzle', 'GuzzleController@index');
 
 Route::get('/google', 'GoogleController@index');
 
+Route::post('/orders/changeStatus', 'OrderController@changeStatus')->name('orders.changeStatus');
+
 //Route::get('/trello', 'TrelloController@index');

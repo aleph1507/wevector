@@ -1,0 +1,3 @@
+﻿update public.users
+set admin = TRUE
+where username = 'user1';

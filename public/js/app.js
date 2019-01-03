@@ -13892,17 +13892,38 @@ function updatePaginator(paginator, current_page, last_page, query) {
 }
 
 function getPage(page, element, paginator, query) {
+  var queryString = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
+  var etarget = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+  var newHTML = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+  var sortBy = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : '';
+  var direction = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : '';
+
   var url = '';
-  if (query == 'active') url = '/orders/active?page=' + page;
-  if (query == 'completed') url = '/orders/completed?page=' + page;
+  queryString = document.getElementById('search-orders').value;
+  if (direction !== '') direction = '&direction=' + (direction == 'asc' ? 'asc' : 'desc');
+  if (etarget != null && newHTML != null && sortBy != '' && direction != '') {
+    sortBy = '&sortBy=' + sortBy;
+  }
+  if (queryString != '') queryString = '&queryString=' + queryString + sortBy + direction;
+  if (query == 'active') url = '/orders/active?page=' + page + queryString + sortBy + direction;
+  if (query == 'completed') url = '/orders/completed?page=' + page + queryString + sortBy + direction;
+
   var success = null;
   axios.get(url).then(function (response) {
-    // console.log(response);
     updatePaginator(paginator, response.data.current_page, response.data.last_page, query);
     renderOrders(response, element);
     setPaginationEvents(element, paginator, query, document.querySelectorAll('.paginator-btn'));
+    console.log('etarget: ', etarget);
+    if (sortBy != '') {
+      console.log('sortBy: ', sortBy);
+      etarget.innerHTML = newHTML;
+      console.log('newHTML: ', newHTML);
+      console.log('etarget.innerHTML: ', etarget.innerHTML);
+    }
+
     success = 0;
   }).catch(function (error) {
+    console.log(error.message);
     success = 1;
   });
   // .then(function() {
@@ -14005,6 +14026,10 @@ $(document).ready(function () {
 
   var adminControls = $('.admin-control');
 
+  var searchOrders = document.getElementById('search-orders');
+
+  var sortOrders = document.getElementsByClassName('sort-orders');
+
   custom_select();
 
   function deleteUser(user) {
@@ -14053,19 +14078,45 @@ $(document).ready(function () {
   }
 
   if (exists(active) && exists(completed)) {
-    var paginationLinks = document.getElementById('paginationLinks');
-    currentlyActive = 'active';
-    getPage(ordersPage, active, paginationLinks, currentlyActive);
-    activeTab.addEventListener('click', function (tab) {
+    (function () {
+      var paginationLinks = document.getElementById('paginationLinks');
       currentlyActive = 'active';
-      console.log(currentlyActive);
       getPage(ordersPage, active, paginationLinks, currentlyActive);
-    });
-    completedTab.addEventListener('click', function (tab) {
-      currentlyActive = 'completed';
-      console.log(currentlyActive);
-      getPage(ordersPage, active, paginationLinks, currentlyActive);
-    });
+      activeTab.addEventListener('click', function (tab) {
+        currentlyActive = 'active';
+        console.log(currentlyActive);
+        getPage(ordersPage, active, paginationLinks, currentlyActive);
+      });
+      completedTab.addEventListener('click', function (tab) {
+        currentlyActive = 'completed';
+        console.log(currentlyActive);
+        getPage(ordersPage, completed, paginationLinks, currentlyActive);
+      });
+      searchOrders.addEventListener('keyup', function (event) {
+        var qString = event.target.value;
+        var tab = currentlyActive == 'completed' ? completed : active;
+        getPage(ordersPage, tab, paginationLinks, currentlyActive, qString);
+      });
+
+      var _loop2 = function _loop2(_i2) {
+        sortOrders[_i2].addEventListener('click', function (event) {
+          console.log('so event');
+          var caretUp = '<i class="fas fa-caret-up"></i>';
+          var caretDown = '<i class="fas fa-caret-down"></i>';
+          var innerHTML = sortOrders[_i2].innerHTML;
+          var sortBy = innerHTML.split(' ')[0];
+          var direction = innerHTML.indexOf(caretUp) !== -1 ? 'asc' : 'desc';
+          var newHTML = sortBy + ' ' + (direction == 'asc' ? caretDown : caretUp);
+          var tab = currentlyActive == 'completed' ? completed : active;
+          var etarget = event.target.tagName.toUpperCase() === 'I' ? event.target.parentNode : event.target;
+          getPage(ordersPage, tab, paginationLinks, currentlyActive, '', etarget, newHTML, sortBy, direction);
+        });
+      };
+
+      for (var _i2 = 0; _i2 < sortOrders.length; _i2++) {
+        _loop2(_i2);
+      }
+    })();
   }
 
   if (exists(modal) && exists(modalTrigger)) {

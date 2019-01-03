@@ -56,6 +56,19 @@
               </ul>
             </div>
           @endif
+          @if(Auth::user()->isAdmin())
+                <form action="{{route('orders.changeStatus')}}" method="POST" class="my-5">
+                    {{ csrf_field() }}
+                    <input type="hidden" value="{{$order->id}}" name="id">
+                    <select name="status">
+                        <option value="Received">Received</option>
+                        <option value="In Process">In Process</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                    <input type="submit" class="btn btn-sm btn-outline-dark" value="Change Status">
+                </form>
+          @endif
           <a href="{{url('/')}}">&laquo; Back to home</a>
         </div>
       </div>
