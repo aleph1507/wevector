@@ -11368,6 +11368,91 @@ a:hover {
   color: #aaa;
 }
 
+.sort-orders {
+  cursor: pointer;
+  position: relative;
+}
+
+.sort-orders#so-name {
+  left: +2%;
+}
+
+.sort-orders#so-id {
+  left: +5.5%;
+}
+
+.sort-orders#so-type {
+  left: +11.5%;
+}
+
+.sort-orders#so-sentOn {
+  left: +16%;
+}
+
+.sort-orders#so-status {
+  left: +19.5%;
+}
+
+.sort-orders#so-comment {
+  left: +20%;
+}
+
+@media (max-width: 1200px) {
+  .sort-orders#so-name {
+    left: +2.5%;
+  }
+
+  .sort-orders#so-id {
+    left: +4.5%;
+  }
+
+  .sort-orders#so-type {
+    left: +10%;
+  }
+
+  .sort-orders#so-sentOn {
+    left: +14.2%;
+  }
+
+  .sort-orders#so-status {
+    left: +16.5%;
+  }
+
+  .sort-orders#so-comment {
+    left: +15%;
+  }
+}
+
+@media (max-width: 992px) {
+  .o-name-span {
+    margin-left: 10px;
+  }
+
+  .sort-orders#so-name {
+    left: +3.5%;
+  }
+
+  .sort-orders#so-id {
+    left: +4.5%;
+  }
+
+  .sort-orders#so-type {
+    left: +9%;
+  }
+
+  .sort-orders#so-sentOn {
+    left: +11.2%;
+  }
+
+  .sort-orders#so-status {
+    left: +10.5%;
+  }
+
+  .sort-orders#so-comment {
+    left: +7%;
+  }
+}
+
 @media (min-width: 1200px) {
   .nav-container {
     max-width: 90%;

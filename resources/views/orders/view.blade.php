@@ -61,10 +61,10 @@
                     {{ csrf_field() }}
                     <input type="hidden" value="{{$order->id}}" name="id">
                     <select name="status">
-                        <option value="Received">Received</option>
-                        <option value="In Process">In Process</option>
-                        <option value="On Hold">On Hold</option>
-                        <option value="Completed">Completed</option>
+                        <option value="Received" {{$order->status == "Received" ? 'selected' : ''}}>Received</option>
+                        <option value="In Process" {{$order->status == "In Process" ? 'selected' : ''}}>In Process</option>
+                        <option value="On Hold" {{$order->status == "On Hold" ? 'selected' : ''}}>On Hold</option>
+                        <option value="Completed" {{$order->status == "Completed" ? 'selected' : ''}}>Completed</option>
                     </select>
                     <input type="submit" class="btn btn-sm btn-outline-dark" value="Change Status">
                 </form>

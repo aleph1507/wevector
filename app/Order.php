@@ -18,7 +18,7 @@ class Order extends Model
     public static function scopeCompleted($query, $val=null)
     {
       // return $query->where('completed', true);
-      return $query->where('status', 'completed');
+      return $query->where('status', 'Completed');
     }
 
     public static function scopeActive($query, $val=null)

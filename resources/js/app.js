@@ -170,12 +170,12 @@ function renderOrders(orders, element)
     let o = orders.data.data[i];
     order_html += `
       <a href="/orders/${o.id}" class="d-none d-md-block">
-        <div class="d-flex mt-2 mb-2 order-row row">
+        <div class="d-flex mt-2 mb-2 order-row row flex-nowrap">
           <div class="col-md-1">
             <img src="/images/${o.id}/thumb/sm/${o.file}"
             alt="image of ${o.name}" class="mr-3">
           </div>
-            <div class="col-md-2 align-middle">
+            <div class="col-md-2 align-middle o-name-span">
               <span>${o.name}</span>
             </div>
             <div class="col-md-2 align-middle">${o.id}</div>
@@ -452,7 +452,8 @@ $(document).ready(function() {
             let innerHTML = sortOrders[i].innerHTML;
             let sortBy = innerHTML.split(' ')[0];
             let direction = innerHTML.indexOf(caretUp) !== -1 ? 'asc' : 'desc';
-            let newHTML = sortBy + ' ' + (direction == 'asc' ? caretDown : caretUp);
+            let t = sortBy == 'Sent' ? 'Sent on' : sortBy;
+            let newHTML = t + ' ' + (direction == 'asc' ? caretDown : caretUp);
             let tab = currentlyActive == 'completed' ? completed : active;
             let etarget = (event.target.tagName.toUpperCase() === 'I' ? event.target.parentNode : event.target)
             getPage(ordersPage, tab, paginationLinks, currentlyActive, '', etarget, newHTML, sortBy, direction);

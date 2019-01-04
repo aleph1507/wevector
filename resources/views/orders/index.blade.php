@@ -38,13 +38,19 @@
       </ul>
       <div class="d-none d-md-block">
         <div class="d-flex justify-content-start align-items-start mt-4 mb-3 t-header row pl-xs-5">
-          <div class="col-1 d-none d-sm-block">&nbsp;</div>
-          <div class="col-2 sort-orders" id="so-name">Name <i class="fas fa-caret-down"></i></div>
-          <div class="col-2 sort-orders" id="so-id">ID <i class="fas fa-caret-down"></i></div>
-          <div class="col-2 sort-orders" id="so-type">Type <i class="fas fa-caret-down"></i></div>
-          <div class="col-2 sort-orders" id="so-sentOn">Sent on <i class="fas fa-caret-down"></i></div>
-          <div class="col-2 sort-orders" id="so-status">Status <i class="fas fa-caret-down"></i></div>
-          <div class="col-1 sort-orders" id="so-comment">Comment <i class="fas fa-caret-down"></i></div>
+          {{--<div class="col-1 d-none d-sm-block">&nbsp;</div>--}}
+            <span class="offset-1 sort-orders" id="so-name">Name <i class="fas fa-caret-down"></i></span>
+            <span class="offset-1 sort-orders" id="so-id">ID <i class="fas fa-caret-down"></i></span>
+            <span class="offset-1 sort-orders" id="so-type">Type <i class="fas fa-caret-down"></i></span>
+            <span class="offset-1 sort-orders" id="so-sentOn">Sent on <i class="fas fa-caret-down"></i></span>
+            <span class="offset-1 sort-orders" id="so-status">Status <i class="fas fa-caret-down"></i></span>
+            <span class="offset-1 sort-orders" id="so-comment">Comment <i class="fas fa-caret-down"></i></span>
+          {{--<div class="col-2 sort-orders" id="so-name">Name <i class="fas fa-caret-down"></i></div>--}}
+          {{--<div class="col-2 sort-orders" id="so-id">ID <i class="fas fa-caret-down"></i></div>--}}
+          {{--<div class="col-2 sort-orders" id="so-type">Type <i class="fas fa-caret-down"></i></div>--}}
+          {{--<div class="col-2 sort-orders" id="so-sentOn">Sent on <i class="fas fa-caret-down"></i></div>--}}
+          {{--<div class="col-2 sort-orders" id="so-status">Status <i class="fas fa-caret-down"></i></div>--}}
+          {{--<div class="col-1 sort-orders" id="so-comment">Comment <i class="fas fa-caret-down"></i></div>--}}
         </div>
       </div>
       <div class="tab-content">

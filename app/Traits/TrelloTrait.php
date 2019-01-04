@@ -13,6 +13,8 @@ trait TrelloTrait
     // generated token: 24ceb7c8e7c3f8e9b32e4c25788359ea21db87a71c8ada27a23d7af890841c0a
     // id, username: hristo82
 
+
+
 //'https://api.trello.com/1/members/hristo82/key={32335dc9a96db5455bb307490a60d207}&token={24ceb7c8e7c3f8e9b32e4c25788359ea21db87a71c8ada27a23d7af890841c0a}'
 
     use GuzzleTrait;
