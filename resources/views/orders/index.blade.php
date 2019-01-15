@@ -167,7 +167,8 @@
       </div>
       <div class="paginator" id="paginationLinks"></div>
     </div>
-    <a href="{{url('/')}}">&laquo; Back to home</a>
+
+    <a href="{{route('orders.create')}}">&laquo; Place an order</a>
   </div>
 
 @endsection

@@ -165,63 +165,68 @@ function openNav(e) {
 function renderOrders(orders, element)
 {
   let order_html = ``;
-  for(let i = 0; i<orders.data.data.length; i++)
-  {
-    let o = orders.data.data[i];
-    order_html += `
-      <a href="/orders/${o.id}" class="d-none d-md-block">
-        <div class="d-flex mt-2 mb-2 order-row row flex-nowrap">
-          <div class="col-md-1">
-            <img src="/images/${o.id}/thumb/sm/${o.file}"
-            alt="image of ${o.name}" class="mr-3">
-          </div>
-            <div class="col-md-2 align-middle o-name-span">
-              <span>${o.name}</span>
-            </div>
-            <div class="col-md-2 align-middle">${o.id}</div>
-            <div class="col-md-2 align-middle">Rushi</div>
-            <div class="col-md-2 align-middle">${o.created_at}</div>
-            <div class="col-md-2 align-middle">${o.status}</div>
-            <div class="col-md-1 align-middle">Jok</div>
-        </div>
-      </a>
-      <a href="/orders/${o.id}" class="d-block d-md-none">
-        <div class="d-flex mt-2 mb-2 orders-sm row">
-          <div class="col-3">
-          <img src="/images/${o.id}/thumb/sm/${o.file}"
-          alt="image of ${o.name}" class="mr-3">
-          </div>
-          <div class="col-9">
-            <div class="row">
-              <div class="col-6">
-                <span>Name: </span> <span>${o.name}</span>
-              </div>
-              <div class="col-6">
-                <span>ID: </span> <span>${o.id}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <span>Comments: </span> <span>Jok</span>
-              </div>
-              <div class="col-6">
-                <span>Status: </span> <span>${o.status}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <span>Type: </span> <span>Rushi</span>
-              </div>
-              <div class="col-6">
-                <span>Sent on: </span> <span>${o.created_at}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a>
-    `;
+  if(orders.data.data.length < 1) {
+      document.querySelector('.list-orders').innerHTML = `<h4>You haven't placed any orders yet</h4>`;
+  } else {
+      for(let i = 0; i<orders.data.data.length; i++)
+      {
+          let o = orders.data.data[i];
+          order_html += `
+              <a href="/orders/${o.id}" class="d-none d-md-block">
+                <div class="d-flex mt-2 mb-2 order-row row flex-nowrap">
+                  <div class="col-md-1">
+                    <img src="/images/${o.id}/thumb/sm/${o.file}"
+                    alt="image of ${o.name}" class="mr-3">
+                  </div>
+                    <div class="col-md-2 align-middle o-name-span">
+                      <span>${o.name}</span>
+                    </div>
+                    <div class="col-md-2 align-middle">${o.id}</div>
+                    <div class="col-md-2 align-middle">Rush</div>
+                    <div class="col-md-2 align-middle">${o.created_at}</div>
+                    <div class="col-md-2 align-middle">${o.status}</div>
+                    <div class="col-md-1 align-middle">N/A</div>
+                </div>
+              </a>
+              <a href="/orders/${o.id}" class="d-block d-md-none">
+                <div class="d-flex mt-2 mb-2 orders-sm row">
+                  <div class="col-3">
+                  <img src="/images/${o.id}/thumb/sm/${o.file}"
+                  alt="image of ${o.name}" class="mr-3">
+                  </div>
+                  <div class="col-9">
+                    <div class="row">
+                      <div class="col-6">
+                        <span>Name: </span> <span>${o.name}</span>
+                      </div>
+                      <div class="col-6">
+                        <span>ID: </span> <span>${o.id}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <span>Comments: </span> <span>N/A</span>
+                      </div>
+                      <div class="col-6">
+                        <span>Status: </span> <span>${o.status}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <span>Type: </span> <span>Rush</span>
+                      </div>
+                      <div class="col-6">
+                        <span>Sent on: </span> <span>${o.created_at}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            `;
+      }
+      element.innerHTML = order_html;
   }
-  element.innerHTML = order_html;
+
   //             <span>Sent on: </span> <span>{{$ao->created_at->format('d/m/Y')}}</span>
 
 }

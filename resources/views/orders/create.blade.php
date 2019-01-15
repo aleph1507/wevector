@@ -35,12 +35,12 @@
           <h3 class="uppercase mt-5 mb-3 mid-title">3. artwork size *</h3>
           <div class="row">
             <div class="col-xs-10 offset-xs-1 col-md-4">
-              <input type="phone" name="width" id="width" class="sm-placeholder"
-              value="{{ old('width') }}" placeholder="Width" required>
+              <input type="tel" name="width" pattern="[0-9]*" id="width" class="sm-placeholder"
+              value="{{ old('width') }}" placeholder="Width" onkeyup="this.value = this.value.replace(/[^0-9]/, '')" required>
             </div>
             <div class="col-xs-10 offset-xs-1 col-md-4 offset-md-1">
-              <input type="phone" name="height" id="height" class="sm-placeholder"
-              value="{{ old('height') }}" placeholder="Height" required>
+              <input type="tel" name="height" pattern="[0-9]*" id="height" class="sm-placeholder"
+              value="{{ old('height') }}" placeholder="Height" onkeyup="this.value = this.value.replace(/[^0-9]/, '')" required>
             </div>
             <div class="col-xs-10 offset-xs-1 col-md-1 offset-md-1">
               <div class="wv_select">
@@ -119,6 +119,6 @@
         </div>
       </div>
     </form>
-    <a href="{{url('/')}}">&laquo; Back to home</a>
+    <a href="{{route('orders.index')}}">&laquo; View orders</a>
   </div>
 @endsection

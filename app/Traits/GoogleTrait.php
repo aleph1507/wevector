@@ -8,6 +8,22 @@ use Storage;
 trait GoogleTrait
 {
 
+    public function add_domain_permissions($driveService, $fileId) {
+        $domain_permission = new \Google_Service_Drive_Permission([
+            'type' => 'domain',
+            'role' => 'writer',
+            'domain' => 'thinkerlab.io'
+        ]);
+
+        try {
+            $driveService->permissions->create($fileId, $domain_permission);
+        } catch (Exception $e) {
+            throw new HttpServerErrorException();
+        }
+
+        return $domain_permission;
+    }
+
     public function new_folder($driveService, $name, $folder = null)
     {
         $metaArray = ['name' => $name, 'mimeType' => 'application/vnd.google-apps.folder'];
@@ -76,7 +92,7 @@ trait GoogleTrait
             return 'No Credentials File.';
         putenv("GOOGLE_APPLICATION_CREDENTIALS=$cred_file");
         $client->useApplicationDefaultCredentials();
-        $value = "aleksandar@thinkerlab.io";
+        $value = "info@thinkerlab.io";
         $client->setSubject($value);
         $client->addScope("https://www.googleapis.com/auth/drive");
         return new \Google_Service_Drive($client);

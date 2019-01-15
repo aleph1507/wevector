@@ -84,6 +84,8 @@ class OrderController extends Controller
             }
         }
 
+        $this->add_domain_permissions($driveService, $project_folder);
+
         return ['project_folder' => $driveService->files->get($project_folder, array("fields" => "webViewLink")),
                 'primary_image' => $driveService->files->get($projectImg->id, array('fields' => 'webViewLink'))];
     }
@@ -153,10 +155,10 @@ class OrderController extends Controller
 
 //      dd($trello->shortUrl);
 
-      Mail::to('xrristo@gmail.com')->send(new
+      Mail::to('info@thinkerlab.io')->send(new
         NewOrder($drive['primary_image']['webViewLink'], $drive['project_folder']['webViewLink'], $trello->shortUrl));
 
-      Session::flash('success', 'Successfuly ordered');
+      Session::flash('success', 'Successfully ordered');
       return redirect('/home');
     }
 

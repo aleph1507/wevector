@@ -19,9 +19,13 @@ trait TrelloTrait
 
     use GuzzleTrait;
 
+//    public $id = 'hristo82';
+//    public $api_key = '32335dc9a96db5455bb307490a60d207';
+//    public $token = '24ceb7c8e7c3f8e9b32e4c25788359ea21db87a71c8ada27a23d7af890841c0a';
+
     public $id = 'hristo82';
-    public $api_key = '32335dc9a96db5455bb307490a60d207';
-    public $token = '24ceb7c8e7c3f8e9b32e4c25788359ea21db87a71c8ada27a23d7af890841c0a';
+    public $api_key = 'c3a61427ffe7638cdf427992aada28ad';
+    public $token = '946918aad705dbf4ffeb31c3631e8440525baa75f160d550bdb19c75ca99ee9b';
 
     public function index()
     {

@@ -69,7 +69,7 @@
                     <input type="submit" class="btn btn-sm btn-outline-dark" value="Change Status">
                 </form>
           @endif
-          <a href="{{url('/')}}">&laquo; Back to home</a>
+          <a href="{{route('orders.index')}}">&laquo; View orders</a>
         </div>
       </div>
     </div>

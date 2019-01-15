@@ -25,6 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         // dd(Auth::user()->orders);
-        return view('home')->with('orders', Auth::user()->orders);
+//        return view('home')->with('orders', Auth::user()->orders);
+        return redirect()->route('orders.index');
     }
 }

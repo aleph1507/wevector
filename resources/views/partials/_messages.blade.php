@@ -1,4 +1,4 @@
-<div class="container nav-container">
+<div class="container nav-container d-flex ">
     @if(Session::has('success'))
 
         <div class="alert alert-success" role="alert">
