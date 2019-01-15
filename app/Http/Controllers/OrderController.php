@@ -206,7 +206,7 @@ class OrderController extends Controller
 //              return json_encode(['sortBy' => 'empty', 'queryString' => $queryString]);
               $data = json_encode(Order::active()->where('name', 'like', '%' . $queryString . '%')
                   ->orWhere('file', 'like', '%' . $queryString . '%')
-                  ->orWhere('created_at', 'like', '%' . $queryString . '%')->paginate(2));
+                  ->orWhere('created_at', 'like', '%' . $queryString . '%')->paginate(5));
           } else {
               $data = json_encode(Order::active()->where('name', 'like', '%' . $queryString . '%')
                   ->orWhere('file', 'like', '%' . $queryString . '%')
@@ -216,9 +216,9 @@ class OrderController extends Controller
           }
       } else {
           if($sortBy == '') {
-              $data = json_encode(Order::active()->latest()->paginate(2));
+              $data = json_encode(Order::active()->latest()->paginate(5));
           } else {
-              $data = json_encode(Order::active()->orderBy($sortBy, $direction)->paginate(2));
+              $data = json_encode(Order::active()->orderBy($sortBy, $direction)->paginate(5));
           }
 
       }
@@ -263,19 +263,19 @@ class OrderController extends Controller
             if($sortBy == '') {
                 $data = json_encode(Order::completed()->where('name', 'like', '%' . $queryString . '%')
                     ->orWhere('file', 'like', '%' . $queryString . '%')
-                    ->orWhere('created_at', 'like', '%' . $queryString . '%')->paginate(2));
+                    ->orWhere('created_at', 'like', '%' . $queryString . '%')->paginate(5));
             } else {
                 $data = json_encode(Order::completed()->where('name', 'like', '%' . $queryString . '%')
                     ->orWhere('file', 'like', '%' . $queryString . '%')
                     ->orWhere('created_at', 'like', '%' . $queryString . '%')
                     ->orderBy($sortBy, $direction)
-                    ->paginate(2));
+                    ->paginate(5));
             }
         } else {
             if($sortBy == '') {
-                $data = json_encode(Order::completed()->latest()->paginate(2));
+                $data = json_encode(Order::completed()->latest()->paginate(5));
             } else {
-                $data = json_encode(Order::completed()->orderBy($sortBy, $direction)->paginate(2));
+                $data = json_encode(Order::completed()->orderBy($sortBy, $direction)->paginate(5));
             }
 
         }
