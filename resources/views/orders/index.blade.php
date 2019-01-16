@@ -36,6 +36,7 @@
             id="completedTab" aria-selected="false">Completed Orders</a>
         </li>
       </ul>
+     <div id="orders-table-div">
       <div class="d-none d-md-block">
         <div class="d-flex justify-content-start align-items-start mt-4 mb-3 t-header row pl-xs-5">
           {{--<div class="col-1 d-none d-sm-block">&nbsp;</div>--}}
@@ -164,6 +165,7 @@
             </a>
           @endforeach --}}
         </div>
+      </div>
       </div>
       <div class="paginator" id="paginationLinks"></div>
     </div>

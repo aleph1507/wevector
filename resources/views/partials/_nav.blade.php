@@ -30,7 +30,7 @@
           </a>
         </div>
         <div class="additional-btns ml-auto d-sm-block">
-          <a href="nav-link" class="d-none d-sm-block" href="#"><i class="fas fa-comments"></i> Here to help</a>
+          <a href="#" class="d-none d-sm-block" href="#"><i class="fas fa-comments"></i> Here to help</a>
           <a class="ml-auto bars-span" id="openNavSpan">
               <img src="{{asset('icons/icons0.png')}}" alt="user_menu"> {{ Auth::user()->name }}
           </a>

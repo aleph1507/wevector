@@ -165,10 +165,9 @@ function openNav(e) {
 function renderOrders(orders, element)
 {
   let order_html = ``;
-  console.log('element: ', element.id);
   if(orders.data.data.length < 1) {
       let noOrdersText = element.id === 'active' ? `<h4>You haven't placed any orders yet</h4>` : `<h4>No completed orders yet</h4>`;
-      document.querySelector('.list-orders').innerHTML = noOrdersText;
+      element.innerHTML = noOrdersText;
   } else {
       for(let i = 0; i<orders.data.data.length; i++)
       {

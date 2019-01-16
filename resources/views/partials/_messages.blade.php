@@ -25,7 +25,7 @@
         @if(!Auth::user()->isActivated())
 
             <div class="alert alert-warning" role="alert">
-                Please verify your e-mail. <strong>Otherwise, your account may be deleted.</strong>
+                Please verify your e-mail. <!--<strong>Otherwise, your account may be deleted.</strong>-->
             </div>
 
         @endif

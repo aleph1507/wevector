@@ -156,7 +156,7 @@ class OrderController extends Controller
 //      dd($trello->shortUrl);
 
       Mail::to('info@thinkerlab.io')->send(new
-        NewOrder($drive['primary_image']['webViewLink'], $drive['project_folder']['webViewLink'], $trello->shortUrl));
+        NewOrder($drive['primary_image']['webViewLink'], $drive['project_folder']['webViewLink'], $trello->shortUrl, $no->id));
 
       Session::flash('success', 'Successfully ordered');
       return redirect('/home');
