@@ -28,7 +28,7 @@
                 </span>
               </div>
                 @if($order->additional_files != null)
-                    <div class="row mt-5 ml-5">
+                    <div class="row mt-5">
                         <ul class="three-cols">
                             @foreach(explode(';', $order->additional_files) as $add_file)
                                 <li class="border-info pt-2">
