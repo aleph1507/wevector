@@ -27,6 +27,21 @@
                   {{$order->width}}x{{$order->height}} {{$order->units}}
                 </span>
               </div>
+                @if($order->additional_files != null)
+                    <div class="row mt-5 ml-5">
+                        <ul class="three-cols">
+                            @foreach(explode(';', $order->additional_files) as $add_file)
+                                <li class="border-info pt-2">
+                                    <a
+                                        target="_blank"
+                                        href="{{asset('images/' . $order->id . '/additional_files' . '/' . $add_file)}}">
+                                        {{$add_file}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             <div
               class="col-xs-12 col-md-6 d-flex justify-content-center align-items-center mt-3 main-img-col">
@@ -41,21 +56,21 @@
             </div>
           </div>
 
-          @if($order->additional_files != null)
-            <div class="row mt-5 ml-5">
-              <ul class="three-cols">
-                @foreach(explode(';', $order->additional_files) as $add_file)
-                  <li class="border-bottom border-info pt-2">
-                    <a
-                      target="_blank"
-                      href="{{asset('images/' . $order->id . '/additional_files' . '/' . $add_file)}}">
-                      {{$add_file}}
-                    </a>
-                  </li>
-                @endforeach
-              </ul>
-            </div>
-          @endif
+          {{--@if($order->additional_files != null)--}}
+            {{--<div class="row mt-5 ml-5">--}}
+              {{--<ul class="three-cols">--}}
+                {{--@foreach(explode(';', $order->additional_files) as $add_file)--}}
+                  {{--<li class="border-bottom border-info pt-2">--}}
+                    {{--<a--}}
+                      {{--target="_blank"--}}
+                      {{--href="{{asset('images/' . $order->id . '/additional_files' . '/' . $add_file)}}">--}}
+                      {{--{{$add_file}}--}}
+                    {{--</a>--}}
+                  {{--</li>--}}
+                {{--@endforeach--}}
+              {{--</ul>--}}
+            {{--</div>--}}
+          {{--@endif--}}
           @if(Auth::user()->isAdmin())
                 <form action="{{route('orders.changeStatus')}}" method="POST" class="my-5">
                     {{ csrf_field() }}
